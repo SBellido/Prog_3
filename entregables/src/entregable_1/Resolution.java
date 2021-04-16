@@ -3,45 +3,47 @@ package entregable_1;
 import java.util.Iterator;
 
 public class Resolution {
-    private SimpleLinkedList list;
     private Integer sum;
 
     public Resolution() {
-        this.list = new SimpleLinkedList();
         this.sum = 0;
     }
 
+    // La complejidad computacional de este método es O(n)
+    // donde n es la cantidad de elementos que contiene la lista.
     public SimpleLinkedList getSolution(SimpleLinkedList entryList, Integer threshold) {
+         SimpleLinkedList resultList = new SimpleLinkedList();
 
-        SimpleLinkedList resultList = new SimpleLinkedList();
-        MyIterator it = (MyIterator) entryList.iterator();
+        MyIterator it = entryList.iterator();
         Integer result = 0;
 
         while (it.hasNext()) {
             Integer value =  it.getValue();
 
             if ((this.sum + value <= threshold)) {
-              result = this.sumSecuence(value);
-              it.move();
+                result = this.sumSecuence(value);
+                it.move();
+                entryList.extractFront();
 
                 if (!it.hasNext() ||
                         result == threshold ||
                         (result + it.getValue() > threshold)) {
-                    resultList.insertFront(result);
-                    System.out.println(result);
+                    resultList.insertLast(result);
                     this.sum -= this.sum;
                 }
+            } else {
+                it.move();
+                entryList.extractFront();
+                this.sum -= this.sum;
             }
         }
 
         return resultList;
     }
 
-
     public Integer sumSecuence(Integer value) {
         return this.sum += value;
     }
-
 
     public Integer sumSecuence() {
         Integer sum = 0;

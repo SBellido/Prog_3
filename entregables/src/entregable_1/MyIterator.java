@@ -10,11 +10,13 @@ public class MyIterator implements Iterator<Integer> {
         this.cursor = cursor;
     }
 
+    // la complejidad computacional es de O(1)
     @Override
     public boolean hasNext() {
         return this.cursor != null;
     }
 
+    // la complejidad computacional es de O(1)
     @Override
     public Integer next() {
         // guarda una referencia al primer valor
@@ -23,15 +25,20 @@ public class MyIterator implements Iterator<Integer> {
         return value;
     }
 
+    // la complejidad computacional es de O(1)
     public Integer getValue() {
         return this.cursor.getInfo();
     }
+
+    // la complejidad computacional es de O(1)
     public void move() {
         this.cursor = this.cursor.getNext();
     }
-    public Node getCursor() {
-        return this.cursor;
-    }
+
+    // la complejidad computacional es de O(1)
+//    public Node getCursor() {
+//        return this.cursor;
+//    }
 
 
 }

@@ -28,6 +28,7 @@ public class Slack {
         return this.list.extractFront();
     }
 
+    // la complejidad computacional es de O(1)
     public void reverse() {
         MySimpleLinkedList auxList = new MySimpleLinkedList();
 
@@ -36,4 +37,5 @@ public class Slack {
 
         this.list = auxList;
     }
+
 }

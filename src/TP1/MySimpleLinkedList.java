@@ -98,13 +98,19 @@ public class MySimpleLinkedList implements Iterable<Integer>{
         return aux.getInfo();
     }
 
-    @Override
-    public String toString() {
-        return "lista " + this.first.getInfo();
+    public void printList() {
+        while (this.iterator().hasNext())
+            this.toString();
     }
 
-    @Override
+        @Override
     public Iterator<Integer> iterator() {
         return new MyIterator(this.first);
     }
+
+    @Override
+    public String toString() {
+        return " " + this.first.getInfo();
+    }
+
 }
