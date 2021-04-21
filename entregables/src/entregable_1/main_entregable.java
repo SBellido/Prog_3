@@ -52,20 +52,22 @@ public class main_entregable {
 
         list_5.insertLast(28);
 
-        System.out.println("Resolución 1: " + resolution.getSolution(list_1, threshold_1));
-        System.out.println(list_1.toString());
+//        System.out.println("Resolución 1: " + resolution.getSolution(list_1, threshold_1));
+//        System.out.println(list_1.toString());
+//
+//        System.out.println("Resolución 2: " + resolution.getSolution(list_2, threshold_2));
+//        System.out.println(list_2.toString());
+//
+//        System.out.println("Resolución 3: " + resolution.getSolution(list_3, threshold_3));
+//        System.out.println(list_3.toString());
+//
+//        System.out.println("Resolución 4: " + resolution.getSolution(list_4, threshold_4));
+//        System.out.println(list_4.toString());
+//
+//        System.out.println("Resolución 5: " + resolution.getSolution(list_5, threshold_5));
+//        System.out.println(list_5.toString());
 
-        System.out.println("Resolución 2: " + resolution.getSolution(list_2, threshold_2));
-        System.out.println(list_2.toString());
-
-        System.out.println("Resolución 3: " + resolution.getSolution(list_3, threshold_3));
-        System.out.println(list_3.toString());
-
-        System.out.println("Resolución 4: " + resolution.getSolution(list_4, threshold_4));
-        System.out.println(list_4.toString());
-
-        System.out.println("Resolución 5: " + resolution.getSolution(list_5, threshold_5));
-        System.out.println(list_5.toString());
+          list_4.print(2);
 
     }
 

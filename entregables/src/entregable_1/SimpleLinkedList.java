@@ -45,8 +45,9 @@ public class SimpleLinkedList implements Iterable<Integer>{
         }
     }
 
-    // la complejidad computacional es de O(1)
-    // ya que la cantidad de accesos a memoria no cambia.
+    // la complejidad computacional es de O(n)
+    // ya que el método get(n) recorre en el peor de los casos
+    // todos los elementos de la lista
     public Integer getLast() {
         return this.get(this.size -1);
     }
@@ -114,6 +115,10 @@ public class SimpleLinkedList implements Iterable<Integer>{
         return listReturn;
     }
 
+    public void print(int n) {
+        for (int i=0; i < n; i++)
+            System.out.println(this.get(i));
+    }
 
     @Override
     public MyIterator iterator() {
