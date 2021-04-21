@@ -53,8 +53,8 @@ public class main_entregable {
         list_5.insertLast(28);
 
         System.out.println("Datos cargados hasta el índice n: ");
-        System.out.println(list_4.print(2));
-        
+        System.out.println(list_4.print(3));
+
         System.out.println("Resolución 1: " + resolution.getSolution(list_1, threshold_1));
         System.out.println(list_1.toString());
 

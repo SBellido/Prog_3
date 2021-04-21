@@ -120,6 +120,8 @@ public class SimpleLinkedList implements Iterable<Integer>{
         if (n <= this.size) {
             for (int i=0; i < n; i++)
                 out += this.get(i) + " ";
+        } else {
+            return "El valor ingresado es mayor a la cantidad de datos cargados";
         }
         return out;
     }
