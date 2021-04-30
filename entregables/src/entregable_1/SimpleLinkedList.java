@@ -140,7 +140,6 @@ public class SimpleLinkedList implements Iterable<Integer>{
             out+= it.getValue() + " ";
             it.move();
         }
-
         return out;
     }
 }

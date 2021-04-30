@@ -1,18 +1,14 @@
 package entregable_2;
 
-public class main {
-    public static void main() {
-        Tree tree = new Tree(50);
+public class main_entregable2 {
 
-        tree.add(33);
-        tree.add(60);
-        tree.add(40);
-        tree.add(55);
-        tree.add(77);
+    public static void main(String[] args) {
+        int[] startValues = new int[] {15, 4, 1, 25, 50, 6, 7, 20, 5, 30};
+        Tree tree = new Tree(startValues);
 
-
-        System.out.println("Nodos fronteras: ");
-        System.out.println(tree.getFrontera());
+        tree.printPreOrder();
+//        System.out.println("Nodos fronteras: ");
+//        System.out.println(tree.getFrontera());
     }
 
 }

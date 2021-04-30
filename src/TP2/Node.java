@@ -1,4 +1,4 @@
-package entregable_1;
+package TP2;
 
 public class Node {
 

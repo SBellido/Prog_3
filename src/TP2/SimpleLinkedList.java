@@ -1,6 +1,4 @@
-package entregable_1;
-
-import java.util.Iterator;
+package TP2;
 
 public class SimpleLinkedList implements Iterable<Integer>{
 

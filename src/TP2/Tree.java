@@ -1,6 +1,7 @@
-package entregable_2;
+package TP2;
 /*
-    Árbol Binario para búsquedas.
+    Ejercicio 6.
+    Implemente la estructura de Árbol Binario para búsquedas.
 
     Métodos:
     ● Object getRoot(), boolean hasElem(Object), boolean isEmpty(), void insert(Object),
@@ -8,43 +9,33 @@ package entregable_2;
     printInOrder(), List getLongestBranch(), List getFrontera(), Object getMaxElem(), List
     getElemAtLevel(int)
 
+    1. ¿Cuál es la complejidad de cada uno de estos métodos?
+    Nota: Mediante moodle indicaremos un ejercicio relacionado con los temas vistos en este
+    práctico que deberá ser entregado en alguna fecha pautada.
 */
-
-import entregable_1.MyIterator;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Tree {
-
     private Tree right;
     private Tree left;
-    private int value;
+    private Integer value;
     private Tree father;
 
-    public Tree(int value, Tree father) {
+    public Tree(Integer value, Tree father) {
         this.value = value;
         this.right = null;
         this.left = null;
         this.setFather(father);
     }
 
-    public Tree(int values[]) {
+    public Tree(Integer value) {
         this.value = value;
         this.right = null;
         this.left = null;
-        this.addAll(values);
         this.setFather(null);
-    }
-
-    private void addAll(int values[]) {
-        for (int i = 0; i < values.length; i++) {
-            if (i != 0)
-                this.add(values[i]);
-            else
-                this.setValue(values[i]);
-        }
     }
 
     public void add(int newValue) {
@@ -76,8 +67,8 @@ public class Tree {
         }
         finalList.addAll(leftlList);
         finalList.addAll(rightList);
-//        String list = this.printList(finalList);
-//        System.out.println(list);
+        String list = this.printList(finalList);
+        System.out.println(list);
         return finalList ;
     }
 
@@ -110,47 +101,27 @@ public class Tree {
         }
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     public Integer getValue() {
         return this.value;
     }
 
-
-    //  Recorrido Pre-orden
-    public void printPreOrder() {
-        if (this.getValue() == null)
-            return;
-
-        System.out.print(this.getValue() + ", ");
-
-        if (this.left != null)
-            this.left.printPreOrder();
-
-        if (this.right != null)
-            this.right.printPreOrder();
+    public String printList(List list) {
+        String out = "";
+        for (Object value : list) {
+            out += value;
+        }
+        return out;
     }
 
-
-//    public String printList(List list) {
-//        String out = "";
-//        for (int i = 0; i < list.size(); i++) {
-//
-//            out += list
-//        }
-//        for (Object value : list) {
-//            out += value.toString();
-//        }
-//        return out;
+    //    @Override
+//    public String toString() {
+//        return "Tree{" +
+//                "value=" + value +
+//                '}';
 //    }
 
 
-
-
-
-    // GETTERS & SETTERS
+// GETTERS & SETTERS
     public void setFather(Tree father) {
         this.father = father;
     }
