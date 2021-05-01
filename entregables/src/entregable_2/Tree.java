@@ -10,9 +10,6 @@ package entregable_2;
 
 */
 
-import entregable_1.MyIterator;
-
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,25 +17,31 @@ public class Tree {
 
     private Tree right;
     private Tree left;
-    private int value;
+    private Integer value;
     private Tree father;
 
-    public Tree(int value, Tree father) {
+    public Tree(Integer value, Tree father) {
         this.value = value;
         this.right = null;
         this.left = null;
         this.setFather(father);
     }
 
-    public Tree(int values[]) {
+    public Tree(Integer values[]) {
         this.value = value;
         this.right = null;
         this.left = null;
         this.addAll(values);
         this.setFather(null);
     }
+    public Tree() {
+        this.value = null;
+        this.right = null;
+        this.left = null;
+        this.setFather(null);
+    }
 
-    private void addAll(int values[]) {
+    private void addAll(Integer values[]) {
         for (int i = 0; i < values.length; i++) {
             if (i != 0)
                 this.add(values[i]);
@@ -47,7 +50,33 @@ public class Tree {
         }
     }
 
-    public void add(int newValue) {
+    public Integer getMaxElem() {
+        Integer max = 0;
+        Integer maxLeft = 0;
+        Integer maxRight = 0;
+
+        if (this.left != null) {
+            Integer value = this.getValue();
+            maxLeft = this.left.getMaxElem();
+            if (value > maxLeft)
+                maxLeft = value;
+        }
+        if (this.right != null) {
+            Integer value = this.getValue();
+            maxRight = this.right.getMaxElem();
+            if (value > maxRight)
+                maxRight = value;
+        }
+        if (maxLeft > maxRight) {
+            max = maxLeft;
+            return  max;
+        } else {
+            max = maxRight;
+            return  max;
+        }
+    }
+
+    public void add(Integer newValue) {
         if (newValue < this.value) {
             if (this.left == null)
                 this.left = new Tree(newValue, this);
@@ -62,22 +91,22 @@ public class Tree {
     }
 
     public List getFrontera() {
-        List leftlList = new ArrayList<Integer>();
+        List leftList = new ArrayList<Integer>();
         List rightList = new ArrayList<Integer>();
         List finalList = new ArrayList<Integer>();
 
         if (this.left == null && this.right == null) {
-            finalList.add(this);
+            finalList.add(this.getValue());
             return finalList;
-        } else if (this.left != null) {
-            leftlList = this.left.getFrontera();
-        } else if (this.right != null) {
+        }
+        if (this.left != null) {
+            leftList = this.left.getFrontera();
+        }
+        if (this.right != null) {
             rightList = this.right.getFrontera();
         }
-        finalList.addAll(leftlList);
+        finalList.addAll(leftList);
         finalList.addAll(rightList);
-//        String list = this.printList(finalList);
-//        System.out.println(list);
         return finalList ;
     }
 
@@ -110,7 +139,7 @@ public class Tree {
         }
     }
 
-    public void setValue(int value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
@@ -133,22 +162,36 @@ public class Tree {
             this.right.printPreOrder();
     }
 
+    //  Recorrido Post-orden
+    public void printPostOrder() {
+        if (this.getValue() == null)
+            return;
 
-//    public String printList(List list) {
-//        String out = "";
-//        for (int i = 0; i < list.size(); i++) {
-//
-//            out += list
-//        }
-//        for (Object value : list) {
-//            out += value.toString();
-//        }
-//        return out;
-//    }
+        if (this.left != null) {
+            this.left.printPostOrder();
+        }
 
+        if (this.right != null) {
+            this.right.printPostOrder();
+        }
+        System.out.print(this.getValue() + ", ");
 
+    }
 
+    //  Recorrido En-orden
+    public void printEnOrder() {
+        if (this.getValue() == null)
+            return;
 
+        if (this.left != null)
+            this.left.printEnOrder();
+
+            System.out.print(this.getValue() + ", ");
+
+        if (this.right != null)
+            this.right.printEnOrder();
+
+    }
 
     // GETTERS & SETTERS
     public void setFather(Tree father) {
