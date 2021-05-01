@@ -34,6 +34,7 @@ public class Tree {
         this.addAll(values);
         this.setFather(null);
     }
+
     public Tree() {
         this.value = null;
         this.right = null;
@@ -48,6 +49,15 @@ public class Tree {
             else
                 this.setValue(values[i]);
         }
+    }
+
+    public List<Integer> getLongestBranch() {
+        int height = 0;
+        List list = new ArrayList<Integer>();
+        if (this.right != null) {
+
+        }
+        return list;
     }
 
     public boolean hasElem(Integer value) {
@@ -65,30 +75,19 @@ public class Tree {
         return hasIt;
     }
 
+
     public Integer getMaxElem() {
-        Integer max = 0;
-        Integer maxLeft = 0;
         Integer maxRight = 0;
 
-        if (this.left != null) {
-            Integer value = this.getValue();
-            maxLeft = this.left.getMaxElem();
-            if (value > maxLeft)
-                maxLeft = value;
-        }
         if (this.right != null) {
             Integer value = this.getValue();
             maxRight = this.right.getMaxElem();
             if (value > maxRight)
                 maxRight = value;
-        }
-        if (maxLeft > maxRight) {
-            max = maxLeft;
-            return  max;
         } else {
-            max = maxRight;
-            return  max;
+            return value;
         }
+        return maxRight;
     }
 
     public void add(Integer newValue) {
