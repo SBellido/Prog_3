@@ -18,6 +18,8 @@ public class main_entregable2 {
         System.out.println(tree.getHeight());
         System.out.println("\nMáximo: ");
         System.out.println(tree.getMaxElem());
+        System.out.println("\nContiene valor: ");
+        System.out.println(tree.hasElem(6));
     }
 
 }

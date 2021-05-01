@@ -50,6 +50,21 @@ public class Tree {
         }
     }
 
+    public boolean hasElem(Integer value) {
+        boolean hasIt = false;
+        if (value == this.getValue()) {
+            hasIt = true;
+            return hasIt;
+        } else if (value > this.getValue()) {
+            if (this.right != null)
+                hasIt = this.right.hasElem(value);
+        } else if (value < this.getValue()) {
+            if (this.left != null)
+                hasIt = this.left.hasElem(value);
+        }
+        return hasIt;
+    }
+
     public Integer getMaxElem() {
         Integer max = 0;
         Integer maxLeft = 0;
@@ -77,16 +92,18 @@ public class Tree {
     }
 
     public void add(Integer newValue) {
-        if (newValue < this.value) {
-            if (this.left == null)
-                this.left = new Tree(newValue, this);
-            else
-                this.left.add(newValue);
-        } else {
-            if (this.right == null)
-                this.right = new Tree(newValue, this);
-            else
-                this.right.add(newValue);
+        if (newValue != this.value) {
+            if (newValue < this.value) {
+                if (this.left == null)
+                    this.left = new Tree(newValue, this);
+                else
+                    this.left.add(newValue);
+            } else {
+                if (this.right == null)
+                    this.right = new Tree(newValue, this);
+                else
+                    this.right.add(newValue);
+            }
         }
     }
 
