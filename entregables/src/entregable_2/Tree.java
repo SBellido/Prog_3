@@ -80,12 +80,9 @@ public class Tree {
         Integer maxRight = 0;
 
         if (this.right != null) {
-            Integer value = this.getValue();
             maxRight = this.right.getMaxElem();
-            if (value > maxRight)
-                maxRight = value;
         } else {
-            return value;
+            return this.getValue();
         }
         return maxRight;
     }
