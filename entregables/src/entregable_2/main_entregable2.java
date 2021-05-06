@@ -24,8 +24,9 @@ public class main_entregable2 {
         System.out.println(tree.hasElem(6));
         System.out.println("\nRama más larga: ");
         System.out.println(tree.getLongestBranch());
-        System.out.println("\nValores de un nivel: ");
-        System.out.println(tree.atElement(3));
+        System.out.println("\nValores de un nivel dado: ");
+        System.out.println(tree.getElemAtLevel(3));
+;
     }
 
 }

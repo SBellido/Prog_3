@@ -15,16 +15,18 @@ import java.util.List;
 
 public class Tree {
 
+    private Integer value;
     private Tree right;
     private Tree left;
-    private Integer value;
     private Tree father;
+    private String color;
 
     public Tree(Integer value, Tree father) {
         this.value = value;
         this.right = null;
         this.left = null;
         this.setFather(father);
+        this.color = "";
     }
 
     public Tree(Integer values[]) {
@@ -42,6 +44,8 @@ public class Tree {
         this.setFather(null);
     }
 
+    // Complejidad computacional: O(n)
+    // donde n es la cantidad de elementos del arreglo.
     private void addAll(Integer values[]) {
         for (int i = 0; i < values.length; i++) {
             if (i != 0)
@@ -51,27 +55,47 @@ public class Tree {
         }
     }
 
-    public List atElement(int value) {
-        List list = new ArrayList<Integer>();
-        int height = 0;
-        if (value == height) {
-            list.add(this.getValue());
-            height++;
-        } else if (value > height) {
-            height++;
-            if (this.left != null) {
-                list = this.left.atElement(height);
-            }
-            if (this.right != null) {
-                list = this.right.atElement(height);
-            }
-        }
-        return list;
+    public boolean delete(Object) {
+        boolean isDeleted = false;
+        
+        return isDeleted;
+    }
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
+    public List getElemAtLevel(int height) {
+        return this.getElemAtLevel(0, height);
     }
 
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
+    private List getElemAtLevel(int amplitudeLevel, int height) {
+        List resultList = new ArrayList<Integer>();
+        List leftList = new ArrayList<Integer>();
+        List righttList = new ArrayList<Integer>();
 
+        // SI LA ALTURA ACTUAL EQUIVALENTE AL VALOR BUSCADO
+        // AGREGA EL VALOR A LA LISTA RESULTADO
+        if (height == amplitudeLevel) {
+            resultList.add(this.getValue());
+            return resultList;
+        } else {
+            // SINO PREGUNTA RECURSIVAMENTE POR IZQUIERDA Y POR DERECHA
+            if (this.left != null)
+                leftList = this.left.getElemAtLevel(amplitudeLevel + 1, height);
+            if (this.right != null)
+                righttList = this.right.getElemAtLevel(amplitudeLevel + 1, height);
+        }
+        // AGREGA LAS LISTAS OBTENIDAS A LA LISTA RESULTADO
+        resultList.addAll(leftList);
+        resultList.addAll(righttList);
+        return resultList;
+    }
+
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
     public List<Integer> getLongestBranch() {
         List longestList = new ArrayList<Integer>();
+
         // SI NO SOY UNA HOJA
         if (!(this.left == null && this.right == null)) {
             List rightHeightList = new ArrayList<Integer>();
@@ -89,21 +113,29 @@ public class Tree {
             // COMPARA TAMAÑOS DE LISTA Y OBTIENE LA MAYOR
             longestList = this.compareSizeList(lerftHeightList, rightHeightList);
         }
+        // SI EL ÁRBOL ESTABA VACÍO AGREGA EL VALOR DE LA RAÍZ,
+        // SINO AGREGA EL VALOR DE LA HOJA EN LA LISTA MÁS LARGA,
         longestList.add(this.getValue());
-        // SOY UN ÁRBOL VACÍO, RETORNA EL VALOR DE LA RAÍZ
         return longestList;
     }
 
 
+    // la complejidad computacional es de O(1)
     private List completeLeftList(List left) {
         left.add(this.getValue());
         return left;
     }
+
+
+    // la complejidad computacional es de O(1)
     private List completeRightList(List right) {
         right.add(this.getValue());
         return right;
     }
 
+
+    // Complejidad computacional: O(n)
+    // donde n es la suma de la cantidad de elementos de cada lista.
     private List compareSizeList(List leftList, List rightList) {
         if (leftList.size() > rightList.size())
             return leftList;
@@ -112,6 +144,8 @@ public class Tree {
     }
 
 
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
     public boolean hasElem(Integer value) {
         boolean hasIt = false;
 
@@ -130,6 +164,9 @@ public class Tree {
         return hasIt;
     }
 
+
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
     public Integer getMinElem() {
         Integer minLeft = 0;
         if (this.left != null)
@@ -139,6 +176,9 @@ public class Tree {
         return minLeft;
     }
 
+
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
     public Integer getMaxElem() {
         Integer maxRight = 0;
         if (this.right != null)
@@ -148,6 +188,9 @@ public class Tree {
         return maxRight;
     }
 
+
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
     public void add(Integer newValue) {
         if (newValue != this.value) {
             if (newValue < this.value) {
@@ -164,6 +207,9 @@ public class Tree {
         }
     }
 
+
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
     public List getFrontera() {
         List leftList = new ArrayList<Integer>();
         List rightList = new ArrayList<Integer>();
@@ -188,15 +234,19 @@ public class Tree {
         return finalList ;
     }
 
+    // Complejidad computacional: O(1)
     public Integer getRoot() {
         return this.getValue();
     }
 
+    // Complejidad computacional: O(1)
     public boolean isEmpty() {
         return this.getValue() == null;
     }
 
-    // Complejidad O(n) donde n es la cantidad de valores del arbol
+
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
     public int getHeight() {
         if (this.left == null && this.right == null) { // Si soy una hoja
             return 0; // Soy chato, tengo altura 0
@@ -217,46 +267,56 @@ public class Tree {
         }
     }
 
+    // Complejidad computacional: O(1)
     public void setValue(Integer value) {
         this.value = value;
     }
 
+    // Complejidad computacional: O(1)
     public Integer getValue() {
         return this.value;
     }
 
 
-    //  Recorrido Pre-orden
+
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
     public void printPreOrder() {
         if (this.getValue() == null)
             return;
 
-        System.out.print(this.getValue() + ", ");
+        System.out.print(this.getValue() + " ");
 
         if (this.left != null)
             this.left.printPreOrder();
-
+        else
+            System.out.print(" - ");
         if (this.right != null)
             this.right.printPreOrder();
+        else
+            System.out.print(" - ");
     }
 
-    //  Recorrido Post-orden
+
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
     public void printPostOrder() {
         if (this.getValue() == null)
             return;
 
-        if (this.left != null) {
+        if (this.left != null)
             this.left.printPostOrder();
-        }
 
-        if (this.right != null) {
+        if (this.right != null)
             this.right.printPostOrder();
-        }
-        System.out.print(this.getValue() + ", ");
+
+        System.out.print(this.getValue() + " ");
 
     }
 
-    //  Recorrido En-orden
+
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
     public void printEnOrder() {
         if (this.getValue() == null)
             return;
@@ -264,7 +324,7 @@ public class Tree {
         if (this.left != null)
             this.left.printEnOrder();
 
-            System.out.print(this.getValue() + ", ");
+            System.out.print(this.getValue() + "  ");
 
         if (this.right != null)
             this.right.printEnOrder();
@@ -272,11 +332,25 @@ public class Tree {
     }
 
     // GETTERS & SETTERS
+
+    // Complejidad computacional: O(1)
+    public Tree getFather() {
+        return this.father;
+    }
+
+    // Complejidad computacional: O(1)
     public void setFather(Tree father) {
         this.father = father;
     }
-    public Tree getFather() {
-        return this.father;
+
+    // Complejidad computacional: O(1)
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    // Complejidad computacional: O(1)
+    public String getColor() {
+        return color;
     }
 
 }
