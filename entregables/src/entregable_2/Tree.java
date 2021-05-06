@@ -19,18 +19,16 @@ public class Tree {
     private Tree right;
     private Tree left;
     private Tree father;
-    private String color;
 
     public Tree(Integer value, Tree father) {
         this.value = value;
         this.right = null;
         this.left = null;
         this.setFather(father);
-        this.color = "";
     }
 
     public Tree(Integer values[]) {
-        this.value = value;
+        this.value = null;
         this.right = null;
         this.left = null;
         this.addAll(values);
@@ -44,31 +42,119 @@ public class Tree {
         this.setFather(null);
     }
 
+
     // Complejidad computacional: O(n)
     // donde n es la cantidad de elementos del arreglo.
     private void addAll(Integer values[]) {
+        // RECORRE EL ARREGLO
         for (int i = 0; i < values.length; i++) {
+            // AGREGA UN VALOR A LA RAÍZ
             if (i != 0)
                 this.add(values[i]);
             else
+                // AGREGA EL RESTO DE LOS VALORES
                 this.setValue(values[i]);
         }
     }
 
-    public boolean delete(Object) {
+    private void removeTree() {
+        this.setValue(null);
+        this.setFather(null);
+        this.setLeft(null);
+        this.setRight(null);
+    }
+
+    private void redirectParentPointer() {
+        if (this.amILeftChild()) {
+            if (this.left != null) {
+                this.left.setFather(this.father);
+                this.father.left.setValue(this.left.getValue());
+            } else if (this.right != null){
+                this.right.setFather(this.father);
+                this.father.right.setValue(this.right.getValue());
+            }
+        }
+        if (this.amIRightChild()) {
+            if (this.right != null) {
+                this.right.setFather(this.father);
+                this.father.right.setValue(this.right.getValue());
+            } else if (this.left != null){
+                this.left.setFather(this.father);
+                this.father.left.setValue(this.left.getValue());
+            }
+        }
+    }
+
+    private void removeParentPointer() {
+        // SI ES UN HIJO IZQUIERDO LO ELIMINA
+        if (this.amILeftChild()) {
+            this.removeTree();
+            this.father.left = null;
+        }
+        // SI ES UN HIJO DERECHO LO ELIMINA
+        if (amIRightChild()) {
+            this.removeTree();
+            this.father.right = null;
+        }
+    }
+
+    private boolean amILeftChild() {
+        // SI EL PADRE TIENE UN HIJO IZQUIERDO
+        return this.father.left.getValue() == this.getValue();
+    }
+    private boolean amIRightChild() {
+        // SI EL PADRE TIENE UN HIJO DERECHO
+        return this.father.right.getValue() == this.getValue();
+    }
+
+    public boolean delete(Integer value) {
         boolean isDeleted = false;
-        
+
+        //  CONDICIÓN DE CORTE,
+        //  SI EL VALOR FUE ENCONTRADO
+        if (!isDeleted) {
+
+            //  SI EL VALOR BUSCADO ES IGUAL AL VALOR ACTUAL
+            if (this.getValue() == value) {
+
+                // SI EL VALOR ENCONTRADO ESTÁ EN UNA HOJA,
+                // SETTEA ÁRBOL EN NULL Y REMUEVE EL PUNTERO DE SU PADRE
+                if (this.left == null && this.right == null) {
+                    this.removeParentPointer();
+                    isDeleted = true;
+
+                // SI EL VALOR ENCONTRADO ESTÁ EN UN ÁRBOL CON UN HIJO,
+                // SETTEA ÁRBOL EN NULL Y REDIRECCIONA EL PUNTERO DE SU PADRE
+                } else if (this.left != null || this.right != null) {
+                    this.redirectParentPointer();
+                    isDeleted = true;
+                }
+            } else {
+                if (this.left != null)
+                    isDeleted this.left.delete(value);
+                if (this.right != null)
+                    isDeleted this.right.delete(value);
+            }
+            return isDeleted;
+        }
+
+        if (this.getValue() != value){
+        isDeleted = this.left.delete(value);
+        }
         return isDeleted;
     }
-    //  Complejidad computacional: (h)
-    //  donde h es la altura del árbol
-    public List getElemAtLevel(int height) {
-        return this.getElemAtLevel(0, height);
-    }
+
 
     //  Complejidad computacional: (h)
     //  donde h es la altura del árbol
-    private List getElemAtLevel(int amplitudeLevel, int height) {
+    public List getElementAtLevel(int height) {
+        return this.getElementAtLevel(0, height);
+    }
+
+
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
+    private List getElementAtLevel(int amplitudeLevel, int height) {
         List resultList = new ArrayList<Integer>();
         List leftList = new ArrayList<Integer>();
         List righttList = new ArrayList<Integer>();
@@ -81,15 +167,16 @@ public class Tree {
         } else {
             // SINO PREGUNTA RECURSIVAMENTE POR IZQUIERDA Y POR DERECHA
             if (this.left != null)
-                leftList = this.left.getElemAtLevel(amplitudeLevel + 1, height);
+                leftList = this.left.getElementAtLevel(amplitudeLevel + 1, height);
             if (this.right != null)
-                righttList = this.right.getElemAtLevel(amplitudeLevel + 1, height);
+                righttList = this.right.getElementAtLevel(amplitudeLevel + 1, height);
         }
         // AGREGA LAS LISTAS OBTENIDAS A LA LISTA RESULTADO
         resultList.addAll(leftList);
         resultList.addAll(righttList);
         return resultList;
     }
+
 
     //  Complejidad computacional: (h)
     //  donde h es la altura del árbol
@@ -149,14 +236,20 @@ public class Tree {
     public boolean hasElem(Integer value) {
         boolean hasIt = false;
 
+        // SI EL VALOR BUSCADO ES IGUAL AL VALOR ACTUAL
+        // SETTEA Y RETORNA VERDADERO
         if (value == this.getValue()) {
             hasIt = true;
             return hasIt;
 
+        // SI EL VALOR BUSCADO ES MAYOR AL VALOR ACTUAL,
+        // SI SU HIJO DERECHO EXISTE LLAMA RECURSIVAMENTE POR DERECHA
         } else if (value > this.getValue()) {
             if (this.right != null)
                 hasIt = this.right.hasElem(value);
 
+        // SI EL VALOR BUSCADO ES MENOR AL VALOR ACTUAL,
+        // SI SU HIJO IZQUIERDO EXISTE LLAMA RECURSIVAMENTE POR IZQUIERDA
         } else if (value < this.getValue()) {
             if (this.left != null)
                 hasIt = this.left.hasElem(value);
@@ -188,6 +281,16 @@ public class Tree {
         return maxRight;
     }
 
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
+//    public Tree mostLeft() {
+//        Tree mostLeft = new Tree();
+//        if (this.right != null)
+//            mostLeft = this.right.mostLeft();
+//        else
+//            return this;
+//        return mostLeft;
+//    }
 
     //  Complejidad computacional: (h)
     //  donde h es la altura del árbol
@@ -234,10 +337,12 @@ public class Tree {
         return finalList ;
     }
 
+
     // Complejidad computacional: O(1)
     public Integer getRoot() {
         return this.getValue();
     }
+
 
     // Complejidad computacional: O(1)
     public boolean isEmpty() {
@@ -248,7 +353,9 @@ public class Tree {
     //  Complejidad computacional: (h)
     //  donde h es la altura del árbol
     public int getHeight() {
-        if (this.left == null && this.right == null) { // Si soy una hoja
+
+        // SI LA RAÍZ ES UNA HOJA RETORNA 0
+        if (this.left == null && this.right == null) {
             return 0; // Soy chato, tengo altura 0
         } else {
             // Si tengo al menos un hijo
@@ -267,6 +374,7 @@ public class Tree {
         }
     }
 
+
     // Complejidad computacional: O(1)
     public void setValue(Integer value) {
         this.value = value;
@@ -276,7 +384,6 @@ public class Tree {
     public Integer getValue() {
         return this.value;
     }
-
 
 
     //  Complejidad computacional: (h)
@@ -306,9 +413,13 @@ public class Tree {
 
         if (this.left != null)
             this.left.printPostOrder();
+        else
+            System.out.print(" - ");
 
         if (this.right != null)
             this.right.printPostOrder();
+        else
+            System.out.print(" - ");
 
         System.out.print(this.getValue() + " ");
 
@@ -323,12 +434,15 @@ public class Tree {
 
         if (this.left != null)
             this.left.printEnOrder();
+        else
+            System.out.print(" - ");
 
             System.out.print(this.getValue() + "  ");
 
         if (this.right != null)
             this.right.printEnOrder();
-
+        else
+            System.out.print(" - ");
     }
 
     // GETTERS & SETTERS
@@ -339,18 +453,18 @@ public class Tree {
     }
 
     // Complejidad computacional: O(1)
-    public void setFather(Tree father) {
+    private void setFather(Tree father) {
         this.father = father;
     }
 
     // Complejidad computacional: O(1)
-    public void setColor(String color) {
-        this.color = color;
+    private void setLeft(Integer value) {
+        this.left.setValue(value);
     }
 
     // Complejidad computacional: O(1)
-    public String getColor() {
-        return color;
+    private void setRight(Integer value) {
+        this.right.setValue(value);
     }
 
 }
