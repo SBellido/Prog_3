@@ -11,6 +11,7 @@ package entregable_2;
 */
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class Tree {
@@ -20,7 +21,7 @@ public class Tree {
     private Tree left;
     private Tree father;
 
-    public Tree(Integer value, Tree father) {
+    private Tree(Integer value, Tree father) {
         this.value = value;
         this.right = null;
         this.left = null;
@@ -42,7 +43,7 @@ public class Tree {
         this.setFather(null);
     }
 
-
+//preguntar
     // Complejidad computacional: O(n)
     // donde n es la cantidad de elementos del arreglo.
     private void addAll(Integer values[]) {
@@ -64,84 +65,112 @@ public class Tree {
         this.setRight(null);
     }
 
+    private void giveMyFatherLeftSon() {
+        if (this.left != null)
+            this.setValue(this.left.getValue());
+            this.father.left.setValue(this.getValue());
+
+        if (this.right != null)
+            this.setValue(this.right.getValue());
+            this.father.right.setValue(this.getValue());
+    }
+
+    private void giveMyFatherRightSon() {
+        if (this.right != null) {
+            this.father.right.setValue(this.right.getValue());
+            this.setValue(null);
+        }
+        if (this.left != null) {
+            this.father.right.setValue(this.left.getValue());
+            this.left.setValue(null);
+        }
+    }
+
     private void redirectParentPointer() {
         if (this.amILeftChild()) {
-            if (this.left != null) {
-                this.left.setFather(this.father);
-                this.father.left.setValue(this.left.getValue());
-            } else if (this.right != null){
-                this.right.setFather(this.father);
-                this.father.right.setValue(this.right.getValue());
-            }
+            this.giveMyFatherLeftSon();
         }
         if (this.amIRightChild()) {
-            if (this.right != null) {
-                this.right.setFather(this.father);
-                this.father.right.setValue(this.right.getValue());
-            } else if (this.left != null){
-                this.left.setFather(this.father);
-                this.father.left.setValue(this.left.getValue());
-            }
+            this.giveMyFatherRightSon();
+        }
+    }
+
+    private void removePointer(Integer searchedValue) {
+        //  SETTEA EN NULL AL ÁRBOL QUE TIENE EL VALOR BUSCADO
+        if (this.left != null) {
+            if (this.left.getValue() == searchedValue)
+                this.left.setValue(null);
+        }
+        if (this.right != null) {
+            if (this.right.getValue() == searchedValue)
+                this.right.setValue(null);
         }
     }
 
     private void removeParentPointer() {
         // SI ES UN HIJO IZQUIERDO LO ELIMINA
         if (this.amILeftChild()) {
-            this.removeTree();
             this.father.left = null;
         }
         // SI ES UN HIJO DERECHO LO ELIMINA
         if (amIRightChild()) {
-            this.removeTree();
             this.father.right = null;
         }
     }
 
     private boolean amILeftChild() {
         // SI EL PADRE TIENE UN HIJO IZQUIERDO
-        return this.father.left.getValue() == this.getValue();
+        return this.getValue() < this.father.getValue();
     }
     private boolean amIRightChild() {
         // SI EL PADRE TIENE UN HIJO DERECHO
-        return this.father.right.getValue() == this.getValue();
+        return this.getValue() > this.father.getValue();
+    }
+
+    private void replaceValue(Integer newValue) {
+            this.setValue(newValue);
     }
 
     public boolean delete(Integer value) {
         boolean isDeleted = false;
 
-        //  CONDICIÓN DE CORTE,
-        //  SI EL VALOR FUE ENCONTRADO
-        if (!isDeleted) {
+        //  SI EL VALOR BUSCADO ES IGUAL AL VALOR ACTUAL
+        if (this.getValue() == value) {
 
-            //  SI EL VALOR BUSCADO ES IGUAL AL VALOR ACTUAL
-            if (this.getValue() == value) {
+            // SI EL VALOR ENCONTRADO ESTÁ EN UNA HOJA,
+            // SETTEA ÁRBOL EN NULL Y REMUEVE EL PUNTERO DE SU PADRE
+            if (this.left == null && this.right == null) {
+                this.removeParentPointer();
+                isDeleted = true;
 
-                // SI EL VALOR ENCONTRADO ESTÁ EN UNA HOJA,
-                // SETTEA ÁRBOL EN NULL Y REMUEVE EL PUNTERO DE SU PADRE
-                if (this.left == null && this.right == null) {
-                    this.removeParentPointer();
-                    isDeleted = true;
+            // SI EL VALOR ENCONTRADO ESTÁ EN UN ÁRBOL CON UN HIJO,
+            // SETTEA ÁRBOL EN NULL Y REDIRECCIONA EL PUNTERO DE SU PADRE
+            } else if ((this.left != null && this.right == null) ||
+                    (this.left == null && this.right != null)) {
+                this.redirectParentPointer();
+                isDeleted = true;
 
-                // SI EL VALOR ENCONTRADO ESTÁ EN UN ÁRBOL CON UN HIJO,
-                // SETTEA ÁRBOL EN NULL Y REDIRECCIONA EL PUNTERO DE SU PADRE
-                } else if (this.left != null || this.right != null) {
-                    this.redirectParentPointer();
-                    isDeleted = true;
-                }
-            } else {
-                if (this.left != null)
-                    isDeleted this.left.delete(value);
-                if (this.right != null)
-                    isDeleted this.right.delete(value);
+            // SI EL VALOR ENCONTRADO ESTÁ EN UN ÁRBOL CON DOS HIJOS,
+            // OBTIENE EL MENOR VALOR DE SU ÁRBOL DERECHO,
+            // TOMA SU VALOR Y SETTEA AL PADRE DEL ÁRBOL ENCONTRADO EN NULL
+            } else if (this.left != null && this.right != null) {
+                Integer newValue = this.right.getMinElem();
+                this.replaceValue(newValue);
+                this.right.removePointer(newValue);
+                isDeleted = true;
             }
-            return isDeleted;
-        }
-
-        if (this.getValue() != value){
-        isDeleted = this.left.delete(value);
+        } else {
+            if (value < this.getValue()) {
+                if (this.left != null)
+                    isDeleted = this.left.delete(value);
+            }
+            if (value > this.getValue()) {
+                if (this.right != null)
+                    isDeleted = this.right.delete(value);
+            }
         }
         return isDeleted;
+
     }
 
 
@@ -265,7 +294,7 @@ public class Tree {
         if (this.left != null)
             minLeft = this.left.getMinElem();
         else
-            return this.getValue();
+            minLeft = this.getValue();
         return minLeft;
     }
 
@@ -448,7 +477,7 @@ public class Tree {
     // GETTERS & SETTERS
 
     // Complejidad computacional: O(1)
-    public Tree getFather() {
+    private Tree getFather() {
         return this.father;
     }
 
