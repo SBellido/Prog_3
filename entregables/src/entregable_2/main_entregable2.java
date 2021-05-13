@@ -4,35 +4,46 @@ public class main_entregable2 {
 
     public static void main(String[] args) {
         // Se construye el árbol de ejemplo utilizando el constructor previamente mencionado
-        Integer[] initValues = new Integer[] {15, 4, 1, 25, 50, 6, 7, 20, 5, 30};
+        Integer[] initValues = new Integer[] { 15, 4, 1, 25, 50, 6, 7, 20, 23, 5, 19, 55, 54, 30, 27, 60 };
         Tree MyTree = new Tree(initValues);
 
+        System.out.println("\nEn orden");
         MyTree.printEnOrder();
- //       MyTree.printPreOrder();
+        System.out.println("\nPre orden");
+        MyTree.printPreOrder();
+        System.out.println("\nMáximo valor");
         System.out.println( MyTree.getMaxElem() );
+        System.out.println("\nAltura del árbol");
         System.out.println( MyTree.getHeight() );
-        System.out.println( "rama más larga "+MyTree.getLongestBranch() );
-        System.out.println( MyTree.getElementAtLevel(2) );
+        System.out.println("\nRama más larga");
+        System.out.println( MyTree.getLongestBranch() );
+        System.out.println("\nElementos de un nivel dado");
+        System.out.println( MyTree.getElementAtLevel(1) );
+        System.out.println("\nHojas del árbol");
         System.out.println( MyTree.getFrontera() );
 
+        Integer valueDelete = 25;
+        System.out.println("\nPre orden");
+        MyTree.printPreOrder();
 //        MyTree.add(23);
 //        MyTree.add(3);
-        MyTree.delete(4);
-//        MyTree.delete(30);
-//
-//        MyTree.printPreOrder();
+//        MyTree.delete(50);
+        System.out.println("\nSe borró el " + valueDelete);
+        MyTree.delete(valueDelete);
+
+        MyTree.printPreOrder();
 //        System.out.println( MyTree.getMaxElem() );
 //        System.out.println( MyTree.getHeight() );
 //        System.out.println( MyTree.getLongestBranch() );
 //        System.out.println( MyTree.getElementAtLevel(2) );
 //        System.out.println( MyTree.getFrontera() );
-//
+
 //        MyTree.add(65);
-//        MyTree.delete(5);
+//        MyTree.delete(6);
 //        MyTree.delete(15);
 //        MyTree.add(55);
 
-        MyTree.printPreOrder();
+//          MyTree.printPreOrder();
 //        System.out.println( MyTree.getMaxElem() );
 //        System.out.println( MyTree.getHeight() );
 //        System.out.println( MyTree.getLongestBranch() );

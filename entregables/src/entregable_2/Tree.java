@@ -11,7 +11,6 @@ package entregable_2;
 */
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class Tree {
@@ -43,9 +42,8 @@ public class Tree {
         this.setFather(null);
     }
 
-//preguntar
-    // Complejidad computacional: O(n)
-    // donde n es la cantidad de elementos del arreglo.
+    // Complejidad computacional: O(n*h)
+    // donde n es la cantidad de elementos del arreglo y h la altura del árbol.
     private void addAll(Integer values[]) {
         // RECORRE EL ARREGLO
         for (int i = 0; i < values.length; i++) {
@@ -58,40 +56,12 @@ public class Tree {
         }
     }
 
-    private void removeTree() {
-        this.setValue(null);
-        this.setFather(null);
-        this.setLeft(null);
-        this.setRight(null);
-    }
-
-    private void giveMyFatherLeftSon() {
-        if (this.left != null)
-            this.setValue(this.left.getValue());
-            this.father.left.setValue(this.getValue());
-
-        if (this.right != null)
-            this.setValue(this.right.getValue());
-            this.father.right.setValue(this.getValue());
-    }
-
-    private void giveMyFatherRightSon() {
-        if (this.right != null) {
-            this.father.right.setValue(this.right.getValue());
-            this.setValue(null);
-        }
-        if (this.left != null) {
-            this.father.right.setValue(this.left.getValue());
-            this.left.setValue(null);
-        }
-    }
-
     private void redirectParentPointer() {
-        if (this.amILeftChild()) {
-            this.giveMyFatherLeftSon();
-        }
-        if (this.amIRightChild()) {
-            this.giveMyFatherRightSon();
+        //  SI ES HIJO IZQUIERDO LE DA UN HIJO IZQUIERDO A SU PADRE
+        if (this.left != null) {
+            this.setValue(this.left.getDeleteMaxElem());
+        } else {
+            this.setValue(this.right.getDeleteMinElem());
         }
     }
 
@@ -99,23 +69,22 @@ public class Tree {
         //  SETTEA EN NULL AL ÁRBOL QUE TIENE EL VALOR BUSCADO
         if (this.left != null) {
             if (this.left.getValue() == searchedValue)
-                this.left.setValue(null);
+                this.left = null;
         }
         if (this.right != null) {
             if (this.right.getValue() == searchedValue)
-                this.right.setValue(null);
+                this.right = null;
         }
     }
 
     private void removeParentPointer() {
         // SI ES UN HIJO IZQUIERDO LO ELIMINA
-        if (this.amILeftChild()) {
+        if (this.amILeftChild())
             this.father.left = null;
-        }
+
         // SI ES UN HIJO DERECHO LO ELIMINA
-        if (amIRightChild()) {
+        if (amIRightChild())
             this.father.right = null;
-        }
     }
 
     private boolean amILeftChild() {
@@ -130,6 +99,33 @@ public class Tree {
     private void replaceValue(Integer newValue) {
             this.setValue(newValue);
     }
+
+    private Integer getDeleteMaxElem() {
+        Integer maxRight = 0;
+        if (this.right != null) {
+            maxRight = this.right.getDeleteMaxElem();
+        } else {
+            maxRight = this.getValue();
+            Integer aux = maxRight;
+            this.setValue(null);
+            return aux;
+        }
+        return maxRight;
+    }
+
+    private Integer getDeleteMinElem() {
+        Integer minLeft = 0;
+        if (this.left == null) {
+            minLeft = this.getValue();
+            Integer aux = minLeft;
+            this.father.left.setValue(null);
+            return aux;
+        } else {
+            minLeft = this.left.getDeleteMinElem();
+        }
+        return minLeft;
+    }
+
 
     public boolean delete(Integer value) {
         boolean isDeleted = false;
@@ -298,7 +294,6 @@ public class Tree {
         return minLeft;
     }
 
-
     //  Complejidad computacional: (h)
     //  donde h es la altura del árbol
     public Integer getMaxElem() {
@@ -310,16 +305,6 @@ public class Tree {
         return maxRight;
     }
 
-    //  Complejidad computacional: (h)
-    //  donde h es la altura del árbol
-//    public Tree mostLeft() {
-//        Tree mostLeft = new Tree();
-//        if (this.right != null)
-//            mostLeft = this.right.mostLeft();
-//        else
-//            return this;
-//        return mostLeft;
-//    }
 
     //  Complejidad computacional: (h)
     //  donde h es la altura del árbol
@@ -454,7 +439,6 @@ public class Tree {
 
     }
 
-
     //  Complejidad computacional: (h)
     //  donde h es la altura del árbol
     public void printEnOrder() {
@@ -495,5 +479,48 @@ public class Tree {
     private void setRight(Integer value) {
         this.right.setValue(value);
     }
+
+
+    //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
+//    public Tree mostLeft() {
+//        Tree mostLeft = new Tree();
+//        if (this.right != null)
+//            mostLeft = this.right.mostLeft();
+//        else
+//            return this;
+//        return mostLeft;
+//    }
+
+
+//
+//
+//    private void giveToMyFatherLeftSon() {
+//        //  SI TIENE HIJO IZQUIERDO SE LO SETEA A SU PADRE COMO HIJO IZQUIERDO
+//        if (this.left != null) {
+//            this.father.left.setValue(this.left.getValue());
+//            //    this.setValue(null);
+//            this.left = null;
+//        }
+//        //  SI TIENE HIJO DERECHO SE LO SETEA A SU PADRE COMO HIJO IZQUIERDO
+//        if (this.right != null) {
+//            this.father.left.setValue(this.right.getValue());
+//            //    this.setValue(null);
+//            this.right = null;
+//        }
+//    }
+//
+//    private void giveToMyFatherRightSon() {
+//        //  SI TIENE HIJO DERECHO LE DA A SU PADRE EL VALOR DE SU HIJO DERECHO
+//        if (this.right != null) {
+//            this.father.right.setValue(this.right.getValue());
+//            this.right = null;
+//        }
+//        //  SI TIENE HIJO IZQUIERDO SE LO SETEA A SU PADRE COMO HIJO DERECHO
+//        if (this.left != null) {
+//            this.father.right.setValue(this.left.getValue());
+//            this.right = null;
+//        }
+//    }
 
 }
