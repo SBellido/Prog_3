@@ -22,7 +22,7 @@ public class main_entregable2 {
         System.out.println("\nHojas del árbol");
         System.out.println( MyTree.getFrontera() );
 
-        Integer valueDelete = 4;
+        Integer valueDelete = 30;
         System.out.println("\nPre orden");
         MyTree.printPreOrder();
 //        MyTree.add(23);
