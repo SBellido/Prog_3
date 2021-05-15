@@ -4,7 +4,7 @@ public class main_entregable2 {
 
     public static void main(String[] args) {
         // Se construye el árbol de ejemplo utilizando el constructor previamente mencionado
-        Integer[] initValues = new Integer[] { 15, 4, 1, 25, 50, 6, 7, 20, 23, 5, 19, 55, 54, 30, 27, 60 };
+        Integer[] initValues = new Integer[] { 15, 4, 1, 0, 25, 50, 6, 8, 9, 20, 23, 22, 5, 55, 54, 30, 27, 60, 28, 7 };
         Tree MyTree = new Tree(initValues);
 
         System.out.println("\nEn orden");
@@ -22,7 +22,7 @@ public class main_entregable2 {
         System.out.println("\nHojas del árbol");
         System.out.println( MyTree.getFrontera() );
 
-        Integer valueDelete = 25;
+        Integer valueDelete = 4;
         System.out.println("\nPre orden");
         MyTree.printPreOrder();
 //        MyTree.add(23);

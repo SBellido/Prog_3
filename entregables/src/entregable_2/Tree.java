@@ -57,12 +57,12 @@ public class Tree {
     }
 
     private void redirectParentPointer() {
-        //  SI ES HIJO IZQUIERDO LE DA UN HIJO IZQUIERDO A SU PADRE
-        if (this.left != null) {
-            this.setValue(this.left.getDeleteMaxElem());
-        } else {
+        //preguntar si es raíz
+
             this.setValue(this.right.getDeleteMinElem());
-        }
+
+
+
     }
 
     private void removePointer(Integer searchedValue) {
@@ -88,11 +88,11 @@ public class Tree {
     }
 
     private boolean amILeftChild() {
-        // SI EL PADRE TIENE UN HIJO IZQUIERDO
+        // SI ES UN HIJO IZQUIERDO
         return this.getValue() < this.father.getValue();
     }
     private boolean amIRightChild() {
-        // SI EL PADRE TIENE UN HIJO DERECHO
+        // SI ES UN HIJO DERECHO
         return this.getValue() > this.father.getValue();
     }
 
@@ -102,15 +102,29 @@ public class Tree {
 
     private Integer getDeleteMaxElem() {
         Integer maxRight = 0;
-        if (this.right != null) {
-            maxRight = this.right.getDeleteMaxElem();
-        } else {
+        if (this.right == null) {
             maxRight = this.getValue();
             Integer aux = maxRight;
-            this.setValue(null);
+            //this.setValue(this.right.getValue());
+            if (this.isFrontera()) {
+                this.father.right = null;
+            } else  {
+                this.father.right = this.left;
+            }
             return aux;
+        } else {
+            maxRight = this.right.getDeleteMaxElem();
         }
         return maxRight;
+    }
+
+
+    private boolean notHaveChild() {
+        return this.right == null && this.left == null;
+    }
+
+    private boolean isFrontera() {
+        return this.left == null && this.right == null;
     }
 
     private Integer getDeleteMinElem() {
@@ -118,7 +132,16 @@ public class Tree {
         if (this.left == null) {
             minLeft = this.getValue();
             Integer aux = minLeft;
-            this.father.left.setValue(null);
+
+            if (!this.isFrontera()) {
+                this.redirectParentPointer();
+            } else {
+                if (this.amILeftChild())
+                    this.father.left = null;
+                if (this.amIRightChild())
+                    this.father.right = null;
+            }
+
             return aux;
         } else {
             minLeft = this.left.getDeleteMinElem();
@@ -150,9 +173,10 @@ public class Tree {
             // OBTIENE EL MENOR VALOR DE SU ÁRBOL DERECHO,
             // TOMA SU VALOR Y SETTEA AL PADRE DEL ÁRBOL ENCONTRADO EN NULL
             } else if (this.left != null && this.right != null) {
-                Integer newValue = this.right.getMinElem();
-                this.replaceValue(newValue);
-                this.right.removePointer(newValue);
+                //Integer newValue = this.right.getMinElem();
+                //this.replaceValue(newValue);
+                this.redirectParentPointer();
+                //this.right.removePointer(newValue);
                 isDeleted = true;
             }
         } else {
