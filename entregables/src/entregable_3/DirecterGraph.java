@@ -1,84 +1,97 @@
 package entregable_3;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-public class GrafoDirigido<T> implements Grafo<T> {
+public class DirecterGraph<T> implements Graph<T> {
+	private List<Vertex> vertexs;
+
+	public DirecterGraph() {
+		this.vertexs = new ArrayList<>();
+	}
 
 	@Override
-	public void agregarVertice(int verticeId) {
-		// TODO Auto-generated method stub
+	public void addVertex(int vertexId) {
+		Vertex vertex = new Vertex(vertexId);
+		this.vertexs.add(vertex);
+	}
+
+	@Override
+	public void deleteVertex(int vertexId) {
+		//  Auto-generated method stub
 
 	}
 
 	@Override
-	public void borrarVertice(int verticeId) {
-		// TODO Auto-generated method stub
+	public void addArc(int vertexId1, int vertexId2, T hashtag) {
+		Arc newArc = new Arc(vertexId1, vertexId2, hashtag);
+		for (Vertex vertex : vertexs) {
+			if (vertex.getId() == vertexId1) {
+				vertex.addArc(newArc);
+			}
+		}
+	}
+
+	@Override
+	public void deleteArc(int vertexId1, int vertexId2) {
+		//  Auto-generated method stub
 
 	}
 
 	@Override
-	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void borrarArco(int verticeId1, int verticeId2) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean contieneVertice(int verticeId) {
-		// TODO Auto-generated method stub
+	public boolean containVertex(int vertexId) {
+		for (Vertex vertex : vertexs)
+			if (vertex.getId() == vertexId)
+				return true;
 		return false;
 	}
 
 	@Override
-	public boolean existeArco(int verticeId1, int verticeId2) {
-		// TODO Auto-generated method stub
+	public boolean existArc(int vertexId1, int vertexId2) {
+		//  Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
-		// TODO Auto-generated method stub
+	public Arc<T> getArc(int vertexId1, int vertexId2) {
+		//  Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int cantidadVertices() {
-		// TODO Auto-generated method stub
+	public int numberVertex() {
+		//  Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int cantidadArcos() {
-		// TODO Auto-generated method stub
+	public int numberArcs() {
+		//  Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public Iterator<Integer> obtenerVertices() {
-		// TODO Auto-generated method stub
+	public Iterator<Integer> getVertex() {
+		//  Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
-		// TODO Auto-generated method stub
+	public Iterator<Integer> getAdyacent(int vertexId) {
+		//  Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Iterator<Arco<T>> obtenerArcos() {
-		// TODO Auto-generated method stub
+	public Iterator<Arc<T>> getArcs() {
+		//  Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
-		// TODO Auto-generated method stub
+	public Iterator<Arc<T>> getArcs(int vertexId) {
+		//  Auto-generated method stub
 		return null;
 	}
 

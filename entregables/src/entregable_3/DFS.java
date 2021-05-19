@@ -1,58 +1,58 @@
-package TP3;
+package entregable_3;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class DFS {
 	
-	private Grafo<?> grafo;
-	private HashMap<Integer,String> colores;
-	private int tiempo;	
-	private HashMap<Integer,Integer> descubrimiento;
-	private HashMap<Integer,Integer> finalizacion;
+	private Graph<?> graph;
+	private HashMap<Integer,String> colors;
+	private int time;
+	private HashMap<Integer,Integer> discovery;
+	private HashMap<Integer,Integer> ending;
 
-	public DFS(Grafo<?> grafo) {
-		this.grafo = grafo;
-		this.colores = new HashMap<>();
-		this.descubrimiento = new HashMap<>();
-		this.finalizacion = new HashMap<>();
-		this.tiempo = 0;
+	public DFS(Graph<?> graph) {
+		this.graph = graph;
+		this.colors = new HashMap<>();
+		this.discovery = new HashMap<>();
+		this.ending = new HashMap<>();
+		this.time = 0;
 	}
 	
 	public void dfs() {
 		
-		Iterator<Integer> it = this.grafo.obtenerVertices();
+		Iterator<Integer> it = this.graph.getVertex();
 		while (it.hasNext()) {
-			int verticeId = it.next();
-			colores.put(verticeId, "blanco");
+			int vertexId = it.next();
+			colors.put(vertexId, "white");
 		}
-		this.tiempo = 0;
+		this.time = 0;
 		
-		it = this.grafo.obtenerVertices();
+		it = this.graph.getVertex();
 		while (it.hasNext()) {
-			int verticeId = it.next();
-			if (colores.get(verticeId).equals("blanco"))
-				dfs_visit(verticeId);
+			int vertexId = it.next();
+			if (colors.get(vertexId).equals("white"))
+				dfs_visit(vertexId);
 		}
 		
 	}
 	
-	public void dfs_visit(int vertice) {
+	public void dfs_visit(int vertex) {
 		
-		colores.put(vertice, "amarillo");
-		tiempo += 1;
-		descubrimiento.put(vertice, tiempo);
+		colors.put(vertex, "amarillo");
+		time += 1;
+		discovery.put(vertex, time);
 		
-		Iterator<Integer> it = this.grafo.obtenerAdyacentes(vertice);
+		Iterator<Integer> it = this.graph.getAdyacent(vertex);
 		while(it.hasNext()) {
-			int adyacente = it.next();
-			if (colores.get(adyacente).equals("blanco"))
-				dfs_visit(adyacente);
+			int adyacent = it.next();
+			if (colors.get(adyacent).equals("white"))
+				dfs_visit(adyacent);
 		}
 		
-		colores.put(vertice, "negro");
-		tiempo += 1;
-		finalizacion.put(vertice, tiempo);
+		colors.put(vertex, "black");
+		time += 1;
+		ending.put(vertex, time);
 		
 	}
 	

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class EncontrarCaminos {
+public class FindRoads {
 
-	private Grafo<?> grafo;
+	private Graph<?> grafo;
 	private HashMap<Integer, String> colores;
 	private int origen;
 	private int destino;
 
-	public EncontrarCaminos(Grafo<?> grafo, int origen, int destino) {
+	public FindRoads(Graph<?> grafo, int origen, int destino) {
 		this.grafo = grafo;
 		this.colores = new HashMap<>();
 		this.origen = origen;
@@ -20,11 +20,11 @@ public class EncontrarCaminos {
 
 	public ArrayList<ArrayList<Integer>> encontrarCaminos() {
 
-		Iterator<Integer> it = this.grafo.obtenerVertices();
-		while (it.hasNext()) {
-			int verticeId = it.next();
-			colores.put(verticeId, "blanco");
-		}
+//		Iterator<Integer> it = this.grafo.obtenerVertices();
+//		while (it.hasNext()) {
+//			int verticeId = it.next();
+//			colores.put(verticeId, "blanco");
+//		}
 
 		return encontrarCaminos(this.origen);
 	}
@@ -41,22 +41,22 @@ public class EncontrarCaminos {
 			resultado.add(unicoCamino);
 		} else {
 		
-			Iterator<Integer> it = this.grafo.obtenerAdyacentes(vertice);
-			while (it.hasNext()) {
-				int adyacente = it.next();
-				if (colores.get(adyacente).equals("blanco")) {
-					ArrayList<ArrayList<Integer>> caminosParciales = encontrarCaminos(adyacente);
-					
-					for (ArrayList<Integer> caminoParcial: caminosParciales) {
-						ArrayList<Integer> caminoCompleto = new ArrayList<>();
-						caminoCompleto.add(vertice);
-						caminoCompleto.addAll(caminoParcial);
-						resultado.add(caminoCompleto);
-					}
-
-				}
-					
-			}
+//			Iterator<Integer> it = this.grafo.obtenerAdyacentes(vertice);
+//			while (it.hasNext()) {
+//				int adyacente = it.next();
+//				if (colores.get(adyacente).equals("blanco")) {
+//					ArrayList<ArrayList<Integer>> caminosParciales = encontrarCaminos(adyacente);
+//
+//					for (ArrayList<Integer> caminoParcial: caminosParciales) {
+//						ArrayList<Integer> caminoCompleto = new ArrayList<>();
+//						caminoCompleto.add(vertice);
+//						caminoCompleto.addAll(caminoParcial);
+//						resultado.add(caminoCompleto);
+//					}
+//
+//				}
+//
+//			}
 	
 		}
 		

@@ -4,49 +4,49 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class FindWay {
+public class FindRoad {
 
-	private Grafo<?> grafo;
-	private HashMap<Integer, String> colores;
-	private int origen;
-	private int destino;
+	private Graph<?> graph;
+	private HashMap<Integer, String> colors;
+	private int origin;
+	private int destination;
 
-	public FindWay(Grafo<?> grafo, int origen, int destino) {
-		this.grafo = grafo;
-		this.colores = new HashMap<>();
-		this.origen = origen;
-		this.destino = destino;
+	public FindRoad(Graph<?> graph, int origin, int destination) {
+		this.graph = graph;
+		this.colors = new HashMap<>();
+		this.origin = origin;
+		this.destination = destination;
 	}
 
-	public ArrayList<Integer> encontrarCamino() {
+	public ArrayList<Integer> findRoad() {
 
-		Iterator<Integer> it = this.grafo.obtenerVertices();
+		Iterator<Integer> it = this.graph.getVertex();
 		while (it.hasNext()) {
 			int verticeId = it.next();
-			colores.put(verticeId, "blanco");
+			colors.put(verticeId, "white");
 		}
 
-		return encontrarCamino(this.origen);
+		return findRoad(this.origin);
 	}
 
-	public ArrayList<Integer> encontrarCamino(int vertice) {
+	public ArrayList<Integer> findRoad(int vertex) {
 
-		colores.put(vertice, "amarillo");
+		colors.put(vertex, "yellow");
 
-		ArrayList<Integer> resultado = new ArrayList<Integer>();
+		ArrayList<Integer> result = new ArrayList<Integer>();
 		
-		if (vertice == this.destino) {
-			resultado.add(vertice);
+		if (vertex == this.destination) {
+			result.add(vertex);
 		} else {
 		
-			Iterator<Integer> it = this.grafo.obtenerAdyacentes(vertice);
-			while (it.hasNext() && !resultado.isEmpty()) {
-				int adyacente = it.next();
-				if (colores.get(adyacente).equals("blanco")) {
-					ArrayList<Integer> caminoParcial = encontrarCamino(adyacente);
+			Iterator<Integer> it = this.graph.getAdyacent(vertex);
+			while (it.hasNext() && !result.isEmpty()) {
+				int adyacent = it.next();
+				if (colors.get(adyacent).equals("white")) {
+					ArrayList<Integer> caminoParcial = findRoad(adyacent);
 					if (!caminoParcial.isEmpty()) {
-						resultado.add(vertice);
-						resultado.addAll(caminoParcial);
+						result.add(vertex);
+						result.addAll(caminoParcial);
 					}
 				}
 					
@@ -54,9 +54,9 @@ public class FindWay {
 	
 		}
 		
-		colores.put(vertice, "negro");
+		colors.put(vertex, "black");
 
-		return resultado;
+		return result;
 	}
 
 }
