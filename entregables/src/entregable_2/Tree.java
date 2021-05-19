@@ -57,25 +57,13 @@ public class Tree {
     }
 
     private void takeLeftmostValueOfRightChild() {
-        // SETTEA SU VALOR EL MENOR VALOR DE SU ÁRBOL DERECHO,
+        // SETTEA SU VALOR CON EL MENOR VALOR DE SU ÁRBOL DERECHO,
         this.setValue(this.right.getDeleteMinElem());
     }
 
-    private void takeLeftmostValueOfLeftChild() {
-        // SETTEA SU VALOR EL MENOR VALOR DE SU ÁRBOL DERECHO,
+    private void takeRightmostValueOfLeftChild() {
+        // SETTEA SU VALOR CON EL MAYOR VALOR DE SU ÁRBOL IZQUIERDO,
         this.setValue(this.left.getDeleteMaxElem());
-    }
-
-    private void removePointer(Integer searchedValue) {
-        //  SETTEA EN NULL AL ÁRBOL QUE TIENE EL VALOR BUSCADO
-        if (this.left != null) {
-            if (this.left.getValue() == searchedValue)
-                this.left = null;
-        }
-        if (this.right != null) {
-            if (this.right.getValue() == searchedValue)
-                this.right = null;
-        }
     }
 
     private void removeParentPointer() {
@@ -118,12 +106,9 @@ public class Tree {
             Integer aux = maxRight;
 
             if (!this.isFrontera()) {
-                this.takeLeftmostValueOfLeftChild();
+                this.takeRightmostValueOfLeftChild();
             } else {
-                if (this.amILeftChild())
-                    this.father.left = null;
-                if (this.amIRightChild())
-                    this.father.right = null;
+                this.removeParentPointer();
             }
 
             return aux;
@@ -143,10 +128,7 @@ public class Tree {
             if (!this.isFrontera()) {
                 this.takeLeftmostValueOfRightChild();
             } else {
-                if (this.amILeftChild())
-                    this.father.left = null;
-                if (this.amIRightChild())
-                    this.father.right = null;
+                this.removeParentPointer();
             }
 
             return aux;
@@ -157,6 +139,19 @@ public class Tree {
     }
 
 
+    private boolean isParentWithTwoChild() {
+        return this.left != null && this.right != null;
+    }
+
+    private boolean isParentWithChildLeft() {
+        return this.left != null && this.right == null;
+    }
+
+    private boolean isParebtWithChildRight() {
+        return this.left == null && this.right != null;
+    }
+
+    // Complejidad computacional:
     public boolean delete(Integer value) {
         boolean isDeleted = false;
 
@@ -164,36 +159,42 @@ public class Tree {
         if (this.getValue() == value) {
 
             // SI EL VALOR ENCONTRADO ESTÁ EN UNA HOJA,
-            // SETTEA ÁRBOL EN NULL Y REMUEVE EL PUNTERO DE SU PADRE
+            // SETTEA ÁRBOL EN NULL Y ELIMINA EL PUNTERO DE SU PADRE
             if (this.left == null && this.right == null) {
                 this.removeParentPointer();
                 isDeleted = true;
 
-            // SI EL VALOR ENCONTRADO ESTÁ EN UN ÁRBOL CON UN HIJO,
-            // SETTEA ÁRBOL EN NULL Y REDIRECCIONA EL PUNTERO DE SU PADRE
-            } else if (this.left == null && this.right != null) {
-                this.takeLeftmostValueOfRightChild();
-                isDeleted = true;
-
-            } else if (this.left != null && this.right == null)  {
-                this.takeLeftmostValueOfLeftChild();
-                isDeleted = true;
-
-            // SI EL VALOR ENCONTRADO ESTÁ EN UN ÁRBOL CON DOS HIJOS,
+            // SI EL VALOR ENCONTRADO ESTÁ EN UN ÁRBOL CON UN HIJO IZQUIERDO,
+            // O ESTÁ EN UN ÁRBOL CON DOS HIJOS,
             // TOMA EL VALOR DEL HIJO MÁS IZQUIERDO DE SU HIJO DERECHO
-            } else if (this.left != null && this.right != null) {
+            } else if (this.isParebtWithChildRight() || this.isParentWithTwoChild()) {
                 this.takeLeftmostValueOfRightChild();
+                isDeleted = true;
+
+            // SI EL VALOR ENCONTRADO ESTÁ EN UN ÁRBOL CON UN HIJO DERECHO,
+            // O ESTÁ EN UN ÁRBOL CON DOS HIJOS,
+            // TOMA EL VALOR DEL HIJO MÁS DERECHO DE SU HIJO IZQUIERDO
+            } else if (this.isParentWithChildLeft() || this.isParentWithTwoChild()) {
+                this.takeRightmostValueOfLeftChild();
                 isDeleted = true;
             }
+
         } else {
+
+            // SI EL VALOR BUSCADO ES MENOR AL VALOR ACTUAL
+            // LLAMA RECURSIVAMENTE POR IZQUIERDA
             if (value < this.getValue()) {
                 if (this.left != null)
                     isDeleted = this.left.delete(value);
             }
+
+            // SI EL VALOR BUSCADO ES MAYOR AL VALOR ACTUAL
+            // LLAMA RECURSIVAMENTE POR DERECHA
             if (value > this.getValue()) {
                 if (this.right != null)
                     isDeleted = this.right.delete(value);
             }
+
         }
         return isDeleted;
 
@@ -238,8 +239,8 @@ public class Tree {
     public List<Integer> getLongestBranch() {
         List longestList = new ArrayList<Integer>();
 
-        // SI NO SOY UNA HOJA
-        if (!(this.left == null && this.right == null)) {
+        // SI NO ES UNA HOJA
+        if (this.left != null && this.right != null) {
             List rightHeightList = new ArrayList<Integer>();
             List lerftHeightList = new ArrayList<Integer>();
 
@@ -255,21 +256,22 @@ public class Tree {
             // COMPARA TAMAÑOS DE LISTA Y OBTIENE LA MAYOR
             longestList = this.compareSizeList(lerftHeightList, rightHeightList);
         }
+
         // SI EL ÁRBOL ESTABA VACÍO AGREGA EL VALOR DE LA RAÍZ,
         // SINO AGREGA EL VALOR DE LA HOJA EN LA LISTA MÁS LARGA,
         longestList.add(this.getValue());
+
         return longestList;
     }
 
-
-    // la complejidad computacional es de O(1)
+    // Complejidad computacional: O(1)
     private List completeLeftList(List left) {
         left.add(this.getValue());
         return left;
     }
 
 
-    // la complejidad computacional es de O(1)
+    // Complejidad computacional: O(1)
     private List completeRightList(List right) {
         right.add(this.getValue());
         return right;
@@ -424,6 +426,7 @@ public class Tree {
         this.value = value;
     }
 
+
     // Complejidad computacional: O(1)
     public Integer getValue() {
         return this.value;
@@ -438,14 +441,11 @@ public class Tree {
 
         System.out.print(this.getValue() + " ");
 
-        if (this.left != null)
-            this.left.printPreOrder();
-        else
-            System.out.print(" - ");
-        if (this.right != null)
-            this.right.printPreOrder();
-        else
-            System.out.print(" - ");
+        if (this.left != null) this.left.printPreOrder();
+        else System.out.print(" - ");
+
+        if (this.right != null) this.right.printPreOrder();
+        else System.out.print(" - ");
     }
 
 
@@ -510,7 +510,43 @@ public class Tree {
         this.right.setValue(value);
     }
 
+// MÉTODOS QUE YO NO SE USAN EN ESTA NUEVA IMPLEMENTACIÓN
+/*   //  Complejidad computacional: (h)
+    //  donde h es la altura del árbol
+    public List<Integer> getLongestBranch() {
+        List longestList = new ArrayList<Integer>();
+        List leftHeightList = new ArrayList<Integer>();
+        List rightHeightList = new ArrayList<Integer>();
 
+        // SI SOY UNA HOJA
+        if (this.left != null || this.right != null) {
+
+            if (this.right != null) {
+                rightHeightList.addAll(rightHeightList);
+                rightHeightList = this.right.getLongestBranch();
+                System.out.println(this.getValue());
+            }
+
+            // SI TENGO HIJO MENOR LLAMA RECURSIVAMENTE POR LA IZQUIERDA
+            if (this.left != null) {
+                leftHeightList.addAll(leftHeightList);
+                leftHeightList = this.left.getLongestBranch();
+                System.out.println(this.getValue());
+            }
+            // COMPARA TAMAÑOS DE LISTA Y OBTIENE LA MAYOR
+            longestList = this.compareSizeList(leftHeightList, rightHeightList);
+
+        } else {
+            // SI EL ÁRBOL ESTABA VACÍO AGREGA EL VALOR DE LA RAÍZ,
+            longestList.add(this.getValue());
+
+        }
+
+
+        // SINO AGREGA EL VALOR DE LA HOJA EN LA LISTA MÁS LARGA,
+        return longestList;
+    }
+*/
     //  Complejidad computacional: (h)
     //  donde h es la altura del árbol
 //    public Tree mostLeft() {
@@ -521,8 +557,7 @@ public class Tree {
 //            return this;
 //        return mostLeft;
 //    }
-
-
+//
 //
 //
 //    private void giveToMyFatherLeftSon() {
@@ -552,7 +587,7 @@ public class Tree {
 //            this.right = null;
 //        }
 //    }
-
+//
 //    private Integer getDeleteMaxElem() {
 //        Integer maxRight = 0;
 //        if (this.right == null) {
@@ -569,6 +604,18 @@ public class Tree {
 //            maxRight = this.right.getDeleteMaxElem();
 //        }
 //        return maxRight;
+//    }
+//
+//    private void removePointer(Integer searchedValue) {
+//        //  SETTEA EN NULL AL ÁRBOL QUE TIENE EL VALOR BUSCADO
+//        if (this.left != null) {
+//            if (this.left.getValue() == searchedValue)
+//                this.left = null;
+//        }
+//        if (this.right != null) {
+//            if (this.right.getValue() == searchedValue)
+//                this.right = null;
+//        }
 //    }
 
 }
