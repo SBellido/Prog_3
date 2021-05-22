@@ -6,10 +6,14 @@ public class Map {
 
 	private Graph<Integer> graph;
 	private HashMap<Integer, City> cities;
-	
+	private Road bestRoad;
+	private FindRoads findRoads;
+
 	public Map() {
 		this.graph = new UndirecterGraph<Integer>();
 		this.cities = new HashMap<>();
+		this.bestRoad = new Road();
+
 	}
 	
 	public void addCity(City city) {
@@ -21,9 +25,11 @@ public class Map {
 		this.graph.deleteVertex(city.getId());
 		this.cities.remove(city.getId());
 	}
-	
+	public Graph<Integer> getGraph() {
+		return this.graph;
+	}
 	public void addRoute(City origin, City destination, int km) {
-//	/	this.grafo.agr
+//	this.grafo.agr
 
 		this.graph.deleteArc(origin.getId(), destination.getId());
 	}

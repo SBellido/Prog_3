@@ -56,29 +56,87 @@ package entregable_3;
 public class Main {
 
 	public static void main(String[] args) {
-		
 
-		City ayacucho = new City(1,"Ayacucho");
-		City tandil = new City(2,"Tandil");
-		City bolivar = new City(3,"Bolivar");
-		
-		Map mapa = new Map();
-		
-		mapa.addCity(ayacucho); // Agrego ayacucho
-		mapa.addCity(tandil); // Agrego tandil
-		mapa.addCity(bolivar); // Agrego bolivar
-		
-		mapa.addRoute(ayacucho, tandil, 70); // Agrego la ruta entre ayacucho-tandil de 70km
-		
+		Map map = new Map();
+
+		City ayacucho = new City(1, "Ayacucho");
+		ayacucho.setServicesStation(1);
+		ayacucho.setIsThereBalance(false);
+		ayacucho.setThereRadar(false);
+		ayacucho.setRepearCar(2);
+
+		City azul = new City(2, "Azul");
+		azul.setServicesStation(4);
+		azul.setIsThereBalance(false);
+		azul.setThereRadar(true);
+		azul.setRepearCar(4);
+
+		City bolivar = new City(3, "Bolívar");
+		bolivar.setServicesStation(7);
+		bolivar.setIsThereBalance(false);
+		bolivar.setThereRadar(false);
+		bolivar.setRepearCar(4);
+
+		City marDelPlata = new City(4, "Mar del Plata");
+		marDelPlata.setServicesStation(15);
+		marDelPlata.setIsThereBalance(true);
+		marDelPlata.setThereRadar(false);
+		marDelPlata.setRepearCar(12);
+
+		City olavarria = new City(5, "Olavarría");
+		olavarria.setServicesStation(9);
+		olavarria.setIsThereBalance(true);
+		olavarria.setThereRadar(false);
+		olavarria.setRepearCar(17);
+
+		City pehuajo = new City(6, "Pehuajó");
+		pehuajo.setServicesStation(3);
+		pehuajo.setIsThereBalance(true);
+		pehuajo.setThereRadar(true);
+		pehuajo.setRepearCar(5);
+
+		City rauch = new City(7, "Rauch");
+		rauch.setServicesStation(1);
+		rauch.setIsThereBalance(false);
+		rauch.setThereRadar(true);
+		rauch.setRepearCar(5);
+
+		City tandil = new City(8, "Tandil");
+		tandil.setServicesStation(6);
+		tandil.setIsThereBalance(true);
+		tandil.setThereRadar(true);
+		tandil.setRepearCar(5);
+
+		map.addCity(ayacucho);
+		map.addCity(azul);
+		map.addCity(bolivar);
+		map.addCity(marDelPlata);
+		map.addCity(olavarria);
+		map.addCity(pehuajo);
+		map.addCity(rauch);
+		map.addCity(tandil);
+
+//		City ayacucho = new City(1,"Ayacucho");
+//		City tandil = new City(2,"Tandil");
+//		City bolivar = new City(3,"Bolivar");
+//
+//		Map mapa = new Map();
+//
+//		mapa.addCity(ayacucho); // Agrego ayacucho
+//		mapa.addCity(tandil); // Agrego tandil
+//		mapa.addCity(bolivar); // Agrego bolivar
+//
+//		mapa.addRoute(ayacucho, tandil, 70); // Agrego la ruta entre ayacucho-tandil de 70km
+//
 		
 //		mapa.encontrarCamino(ayacucho, bolivar); // Busco el mejor camino entre ayacucho y bolivar
 		
-		mapa.deleteCity(ayacucho); // Borro la ciudad ayacucho
+//		mapa.deleteCity(ayacucho); // Borro la ciudad ayacucho
 //		mapa.borrarRuta(ayacucho, tandil); // Borro la ruta entre ayacucho-tandil
 
 
 		// Creo un grafo dirigdo donde las etiquetas de los arcos son valores Float
-		DirecterGraph<Float> grafito = new DirecterGraph<>();
+	//	DirecterGraph<Float> grafito = new DirecterGraph<>();
 
 		// Agrego los vertices 1 y 2
 //		grafito.agregarVertice(1);

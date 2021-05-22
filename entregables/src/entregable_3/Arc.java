@@ -8,36 +8,39 @@ package entregable_3;
  */
 public class Arc<T> {
 
-	private int vertexOrigin;
-	private int vertexDestination;
+	private int origin;
+	private int destination;
 	private T hashtag;
 
-	public Arc(int vertexOrigin, int vertexDestination, T hashtag) {
-		this.vertexOrigin = vertexOrigin;
-		this.vertexDestination = vertexDestination;
+	public Arc(int origin, int destination, T hashtag) {
+		this.origin = origin;
+		this.destination = destination;
 		this.hashtag = hashtag;
+	}
+	public Arc(int origin, int destination) {
+		this.origin = origin;
+		this.destination = destination;
 	}
 	public Arc() { }
 
-
-	public void setVertexDestination(int vertexDestination) {
-		this.vertexDestination = vertexDestination;
+	public void setVertexDestination(int destination) {
+		this.destination = destination;
 	}
 
 	public void setHashtag(T hashtag) {
 		this.hashtag = hashtag;
 	}
 
-	public void setVertexOrigin(int vertexOrigin) {
-		this.vertexOrigin = vertexOrigin;
+	public void setOrigin(int origin) {
+		this.origin = origin;
 	}
 
-	public int getVertexOrigin() {
-		return vertexOrigin;
+	public int getOrigin() {
+		return origin;
 	}
 	
-	public int getVertexDestination() {
-		return vertexDestination;
+	public int getDestination() {
+		return destination;
 	}
 
 	public T getHashtag() {

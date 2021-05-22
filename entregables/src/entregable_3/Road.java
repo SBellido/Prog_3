@@ -10,7 +10,11 @@ public class Road {
         this.cities = cities;
         this.kms = kms;
     }
+    public Road() {       }
 
+    public void addCity(City city) {
+        this.cities.add(city);
+    }
 
     public void setKms(Integer kms) {
         this.kms = kms;

@@ -3,55 +3,55 @@ package entregable_3;
 public class City {
 
 	private int id;
-	private String nombre;
-	private int estacionesDeServicio;
-	private boolean tieneBalanza;
-	private boolean tieneRadar;
-	private int tallerMecanicos;
+	private String name;
+	private int servicesStation;
+	private boolean thereBalance;
+	private boolean thereRadar;
+	private int repearCar;
 
-	public City(int id, String nombre) {
-		this.nombre = nombre;
+	public City(int id, String name) {
+		this.name = name;
 		this.id = id;
 	}
 	
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
-	public boolean isTieneBalanza() {
-		return tieneBalanza;
+	public boolean isThereBalance() {
+		return thereBalance;
 	}
 
-	public void setTieneBalanza(boolean tieneBalanza) {
-		this.tieneBalanza = tieneBalanza;
+	public void setIsThereBalance(boolean thereBalance) {
+		this.thereBalance = thereBalance;
 	}
 
-	public int getEstacionesDeServicio() {
-		return estacionesDeServicio;
+	public int getServicesStation() {
+		return this.servicesStation;
 	}
 
-	public void setEstacionesDeServicio(int estacionesDeServicio) {
-		this.estacionesDeServicio = estacionesDeServicio;
+	public void setServicesStation(int servicesStation) {
+		this.servicesStation = servicesStation;
 	}
 
-	public boolean isTieneRadar() {
-		return tieneRadar;
+	public boolean isThereRadar() {
+		return this.thereRadar;
 	}
 
-	public void setTieneRadar(boolean tieneRadar) {
-		this.tieneRadar = tieneRadar;
+	public void setThereRadar(boolean thereRadar) {
+		this.thereRadar = thereRadar;
 	}
 
-	public int getTallerMecanicos() {
-		return tallerMecanicos;
+	public int getRepearCar() {
+		return this.repearCar;
 	}
 
-	public void setTallerMecanicos(int tallerMecanicos) {
-		this.tallerMecanicos = tallerMecanicos;
+	public void setRepearCar(int repearCar) {
+		this.repearCar = repearCar;
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 }
