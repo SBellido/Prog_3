@@ -11,10 +11,9 @@ public class DirecterGraph<T> implements Graph<T> {
 		this.vertexs = new ArrayList<>();
 	}
 
-
 	//	Complejidad computacional: O(1)
 	@Override
-	public void addVertex(int vertexId) {
+	public void addVertex(Integer vertexId) {
 		Vertex vertex = new Vertex(vertexId);
 		this.vertexs.add(vertex);
 	}
@@ -23,10 +22,12 @@ public class DirecterGraph<T> implements Graph<T> {
 	// donde v es la cantidad de vértices que componen el grafo
 	// y a la cantidad de arcos que posee el vértice
 	@Override
-	public void deleteVertex(int vertexId) {
-		for (Vertex vertex : vertexs)
-			if (vertex.getId() == vertexId) ;
-			this.vertexs.remove(this.getVertex().next());
+	public void deleteVertex(Integer vertexId) {
+		for (Vertex vertex : vertexs) {
+			if (vertex.getId().equals(vertexId))
+				this.vertexs.remove(vertex);
+
+		}
 	}
 
 
@@ -34,10 +35,10 @@ public class DirecterGraph<T> implements Graph<T> {
 	// donde v es la cantidad de vértices que componen el grafo
 	// y a la cantidad de arcos que posee el vértice
 	@Override
-	public void addArc(int origin, int destination, T hashtag) {
+	public void addArc(Integer origin, Integer destination, T hashtag) {
 		Arc newArc = new Arc(origin, destination, hashtag);
 		for (Vertex vertex : vertexs)
-			if (vertex.getId() == origin && !vertex.containArc(newArc))
+			if (vertex.getId().equals(origin) && !vertex.containArc(newArc))
 				vertex.addArc(newArc);
 	}
 
@@ -46,9 +47,9 @@ public class DirecterGraph<T> implements Graph<T> {
 	// donde v es la cantidad de vértices que componen el grafo
 	// y a la cantidad de arcos que posee el vértice
 	@Override
-	public void deleteArc(int origin, int destination) {
+	public void deleteArc(Integer origin, Integer destination) {
 		for (Vertex vertex : vertexs)
-			if (vertex.getId() == origin)
+			if (vertex.getId().equals(origin))
 				vertex.deleteArc(destination);
 	}
 
@@ -56,9 +57,9 @@ public class DirecterGraph<T> implements Graph<T> {
 	// Complejidad computacional: O(v)
 	// donde v es la cantidad de vértices que componen el grafo
 	@Override
-	public boolean containVertex(int vertexId) {
+	public boolean containVertex(Integer vertexId) {
 		for (Vertex vertex : vertexs)
-			if (vertex.getId() == vertexId)
+			if (vertex.getId().equals(vertexId))
 				return true;
 		return false;
 	}
@@ -68,7 +69,7 @@ public class DirecterGraph<T> implements Graph<T> {
 	// donde v es la cantidad de vértices que componen el grafo
 	// y a la cantidad de arcos que posee el vértice
 	@Override
-	public boolean existArc(int origin, int destination) {
+	public boolean existArc(Integer origin, Integer destination) {
 		Arc auxArc = new Arc(origin, destination);
 		for (Vertex vertex : vertexs)
 			vertex.getArc(origin, destination);
@@ -82,11 +83,10 @@ public class DirecterGraph<T> implements Graph<T> {
 	// donde v es la cantidad de vértices que componen el grafo
 	// y a la cantidad de arcos que posee el vértice
 	@Override
-	public Arc<T> getArc(int origin, int destination) {
+	public Arc<T> getArc(Integer origin, Integer destination) {
 		for (Vertex vertex : vertexs)
-			if (vertex.getId() == origin) {
-				Arc foundArc = vertex.getArc(origin, destination);
-				return foundArc;
+			if (vertex.getId().equals(origin)) {
+				return vertex.getArc(origin, destination);
 			}
 		return null;
 	}
@@ -95,7 +95,7 @@ public class DirecterGraph<T> implements Graph<T> {
 	// Complejidad computacional: O(v)
 	// donde v es la cantidad de vértices que componen el grafo
 	@Override
-	public int numberVertex() {
+	public Integer numberVertex() {
 		return vertexs.size();
 	}
 
@@ -104,7 +104,7 @@ public class DirecterGraph<T> implements Graph<T> {
 	// donde v es la cantidad de vértices que componen el grafo
 	// y a la cantidad de arcos que posee el vértice
 	@Override
-	public int numberArcs() {
+	public Integer numberArcs() {
 		List<Arc> allArcs = new ArrayList<>();
 		for (Vertex vertex : vertexs) {
 			List<Arc> tempArcs = vertex.getArcs();
@@ -116,37 +116,32 @@ public class DirecterGraph<T> implements Graph<T> {
 
 	// Complejidad computacional: O(1)
 	@Override
-	public Iterator<Integer> getVertex() {
-		Iterator it = this.vertexs.iterator();
-		return it;
+	public Iterator<Vertex> getVertex() {
+		return this.vertexs.iterator();
 	}
-
 
 	// Complejidad computacional: O(v*a)
 	// donde v es la cantidad de vértices que componen el grafo
 	// y a la cantidad de arcos que posee el vértice
 	@Override
-	public Iterator<Integer> getAdyacent(int vertexId) {
-		List<Arc> adjacent = new ArrayList<>();
+	public Iterator<Vertex> getAdyacent(Integer vertexId) {
 		for (Vertex vertex : vertexs) {
-			if (vertex.getId() == vertexId) {
-				adjacent = vertex.getArcs();
-				Iterator itAdjacent = adjacent.iterator();
-				return itAdjacent;
+			if (vertex.getId().equals(vertexId)) {
+				List<Arc> adjacent = vertex.getArcs();
+				Iterator itAdjecent = adjacent.iterator();
+				return itAdjecent;
 			}
 		}
 		return null;
 	}
-
 
 	// Complejidad computacional: O(v*a)
 	// donde v es la cantidad de vértices que componen el grafo
 	// y a la cantidad de arcos que posee el vértice
 	@Override
 	public Iterator<Arc<T>> getArcs() {
-		List<Arc> arcs = new ArrayList<>();
 		for (Vertex vertex : vertexs) {
-			arcs = vertex.getArcs();
+			List<Arc> arcs = vertex.getArcs();
 			Iterator itArcs = arcs.iterator();
 			return itArcs;
 		}
@@ -158,12 +153,12 @@ public class DirecterGraph<T> implements Graph<T> {
 	// donde v es la cantidad de vértices que componen el grafo
 	// y a la cantidad de arcos que posee el vértice
 	@Override
-	public Iterator<Arc<T>> getArcs(int vertexId) {
+	public Iterator<Arc<T>> getArcs(Integer vertexId) {
 		for (Vertex vertex : vertexs) {
-			if (vertex.getId() == vertexId) {
+			if (vertex.getId().equals(vertexId)) {
 				List<Arc> arcs = vertex.getArcs();
-				Iterator it = arcs.iterator();
-				return it;
+				Iterator itArcs = arcs.iterator();
+				return itArcs;
 			}
 		}
 		return null;

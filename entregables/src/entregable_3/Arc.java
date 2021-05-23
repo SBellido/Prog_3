@@ -1,29 +1,31 @@
 package entregable_3;
 
 
+
 /*
  * La clase arco representa un arco del grafo. Contiene un vertice origen, un vertice destino y una etiqueta.
  * Nota: Para poder exponer los arcos fuera del grafo y que nadie los modifique se hizo esta clase inmutable
  * (Inmutable: una vez creado el arco no es posible cambiarle los valores).
  */
+
 public class Arc<T> {
 
-	private int origin;
-	private int destination;
+	private Integer origin;
+	private Integer destination;
 	private T hashtag;
 
-	public Arc(int origin, int destination, T hashtag) {
+	public Arc(Integer origin, Integer destination, T hashtag) {
 		this.origin = origin;
 		this.destination = destination;
 		this.hashtag = hashtag;
 	}
-	public Arc(int origin, int destination) {
+	public Arc(Integer origin, Integer destination) {
 		this.origin = origin;
 		this.destination = destination;
 	}
 	public Arc() { }
 
-	public void setVertexDestination(int destination) {
+	public void setVertexDestination(Integer destination) {
 		this.destination = destination;
 	}
 
@@ -31,15 +33,15 @@ public class Arc<T> {
 		this.hashtag = hashtag;
 	}
 
-	public void setOrigin(int origin) {
+	public void setOrigin(Integer origin) {
 		this.origin = origin;
 	}
 
-	public int getOrigin() {
+	public Integer getOrigin() {
 		return origin;
 	}
 	
-	public int getDestination() {
+	public Integer getDestination() {
 		return destination;
 	}
 

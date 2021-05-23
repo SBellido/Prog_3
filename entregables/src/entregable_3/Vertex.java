@@ -1,19 +1,17 @@
 package entregable_3;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class Vertex {
     private Integer id;
-    private List<Integer> vertexs;
-    private List<Arc> arcs;
+    public ArrayList<Arc> arcs;
 
     public Vertex(Integer id) {
         this.id = id;
-        this.vertexs = new ArrayList<>();
         this.arcs = new ArrayList<>();
     }
+
+    public Vertex() {}
 
     // Complejidad computacional: O(1)
     public void addArc(Arc arc) {
@@ -22,7 +20,7 @@ public class Vertex {
 
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
-    public void deleteArc(int destination) {
+    public void deleteArc(Integer destination) {
         for (Arc arc: arcs)
             if (arc.getDestination() == destination)
                 arcs.remove(arc);
@@ -36,10 +34,10 @@ public class Vertex {
 
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
-    public Arc getArc(int origin, int destination) {
-        if (this.getId() == origin) {
+    public Arc getArc(Integer origin, Integer destination) {
+        if (this.getId().equals(origin)) {
             for (Arc arc : arcs)
-                if (arc.getDestination() == destination)
+                if (arc.getDestination().equals(destination))
                     return arc;
         }
         return null;
@@ -47,15 +45,14 @@ public class Vertex {
 
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
-    public List<Arc> getArcs() {
-        List<Arc> arcsCopy = new ArrayList<>();
-        arcsCopy.addAll(this.arcs);
+    public ArrayList<Arc> getArcs() {
+        ArrayList<Arc> arcsCopy = new ArrayList<Arc>(this.arcs);
         return arcsCopy;
     }
 
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
-    public int countArcs() {
+    public Integer countArcs() {
        return arcs.size();
     }
 

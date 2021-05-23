@@ -6,47 +6,74 @@ import java.util.Iterator;
 
 public class FindRoad {
 
+	private final int MAXBALANCES = 2;
 	private Graph<?> graph;
 	private HashMap<Integer, String> colors;
-	private int origin;
-	private int destination;
+	private Vertex origin;
+	private Vertex destination;
+	private Road road;
+	private Integer km;
+	private int balances;
 
-	public FindRoad(Graph<?> graph, int origin, int destination) {
+	public FindRoad() {}
+	public FindRoad(Graph<?> graph, Vertex origin, Vertex destination) {
 		this.graph = graph;
 		this.colors = new HashMap<>();
 		this.origin = origin;
 		this.destination = destination;
+		this.road = null;
+		this.km = 0;
+		this.balances = 0;
 	}
 
-	public ArrayList<Integer> findRoad() {
 
-		Iterator<Integer> it = this.graph.getVertex();
-		while (it.hasNext()) {
-			int verticeId = it.next();
-			colors.put(verticeId, "white");
+	public FindRoad(Graph<?> graph) {
+		this.graph = graph;
+		this.colors = new HashMap<>();
+		this.origin = new Vertex();
+		this.destination = new Vertex();
+		this.road = null;
+		this.km = 0;
+	}
+
+	public ArrayList<Vertex> findRoad(City origin, City destination) {
+
+		this.origin.setId(origin.getId());
+		this.destination.setId(destination.getId());
+
+		Iterator<Vertex> itVertex = this.graph.getVertex();
+		while (itVertex.hasNext()) {
+			Vertex vertexIdActual = itVertex.next();
+			colors.put(vertexIdActual.getId(), "white");
 		}
 
-		return findRoad(this.origin);
+		return getRoad_visit(this.origin, this.km, this.balances);
 	}
 
-	public ArrayList<Integer> findRoad(int vertex) {
 
-		colors.put(vertex, "yellow");
 
-		ArrayList<Integer> result = new ArrayList<Integer>();
-		
-		if (vertex == this.destination) {
-			result.add(vertex);
+	public ArrayList<Vertex> getRoad_visit(Vertex origin, Integer kmActual, int countBalances) {
+
+		colors.put(origin.getId(), "yellow");
+		ArrayList<Vertex> result = new ArrayList<Vertex>();
+
+
+		if (origin.equals(this.destination)) {
+			result.add(origin);
 		} else {
-		
-			Iterator<Integer> it = this.graph.getAdyacent(vertex);
-			while (it.hasNext() && !result.isEmpty()) {
-				int adyacent = it.next();
+
+			Iterator<Vertex> itAdjacent = this.graph.getAdyacent(origin.getId());
+			while ((itAdjacent.hasNext() || countBalances < this.MAXBALANCES)) {
+				Vertex adyacent = itAdjacent.next();
+
 				if (colors.get(adyacent).equals("white")) {
-					ArrayList<Integer> caminoParcial = findRoad(adyacent);
-					if (!caminoParcial.isEmpty()) {
-						result.add(vertex);
-						result.addAll(caminoParcial);
+					kmActual += kmActual;
+					countBalances += countBalances;
+					ArrayList<Vertex> partialRoad = getRoad_visit(adyacent,kmActual, countBalances);
+
+					if (!partialRoad.isEmpty()) {
+						result.add(origin);
+						result.addAll(partialRoad);
 					}
 				}
 					
@@ -54,9 +81,32 @@ public class FindRoad {
 	
 		}
 		
-		colors.put(vertex, "black");
+		colors.put(origin.getId(), "black");
 
 		return result;
 	}
 
+	public Road getRoad() {
+		return road;
+	}
+
+	public void setRoad(Road road) {
+		this.road = road;
+	}
+
+	public void setOrigin(Vertex origin) {
+		this.origin = origin;
+	}
+
+	public void setDestination(Vertex destination) {
+		this.destination = destination;
+	}
+
+	public Integer getKm() {
+		return km;
+	}
+
+	public void setKm(Integer km) {
+		this.km = km;
+	}
 }

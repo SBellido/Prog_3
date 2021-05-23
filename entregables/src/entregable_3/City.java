@@ -2,12 +2,12 @@ package entregable_3;
 
 public class City {
 
-	private int id;
+	private Integer id;
 	private String name;
-	private int servicesStation;
+	private Integer servicesStation;
 	private boolean thereBalance;
 	private boolean thereRadar;
-	private int repearCar;
+	private Integer repearCar;
 
 	public City(int id, String name) {
 		this.name = name;
@@ -22,36 +22,36 @@ public class City {
 		return thereBalance;
 	}
 
-	public void setIsThereBalance(boolean thereBalance) {
-		this.thereBalance = thereBalance;
-	}
-
-	public int getServicesStation() {
+	public Integer getServicesStation() {
 		return this.servicesStation;
 	}
 
-	public void setServicesStation(int servicesStation) {
-		this.servicesStation = servicesStation;
+	public Integer getRepearCar() {
+		return this.repearCar;
+	}
+
+	public Integer getId() {
+		return this.id;
 	}
 
 	public boolean isThereRadar() {
 		return this.thereRadar;
 	}
 
+	public void setServicesStation(int servicesStation) {
+		this.servicesStation = servicesStation;
+	}
+
+	public void setIsThereBalance(boolean thereBalance) {
+		this.thereBalance = thereBalance;
+	}
+
 	public void setThereRadar(boolean thereRadar) {
 		this.thereRadar = thereRadar;
 	}
 
-	public int getRepearCar() {
-		return this.repearCar;
-	}
-
 	public void setRepearCar(int repearCar) {
 		this.repearCar = repearCar;
-	}
-
-	public int getId() {
-		return this.id;
 	}
 
 }

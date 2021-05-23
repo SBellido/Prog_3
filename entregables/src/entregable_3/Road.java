@@ -10,7 +10,9 @@ public class Road {
         this.cities = cities;
         this.kms = kms;
     }
-    public Road() {       }
+
+    public Road() {
+    }
 
     public void addCity(City city) {
         this.cities.add(city);
@@ -20,7 +22,10 @@ public class Road {
         this.kms = kms;
     }
 
+
     public Integer getKms() {
         return kms;
     }
+
+
 }
