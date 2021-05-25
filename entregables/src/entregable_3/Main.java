@@ -56,7 +56,7 @@ package entregable_3;
 public class Main {
 
 	public static void main(String[] args) {
-
+		System.setProperty("spring.devtools.restart.enabled", "false");
 		Map map = new Map();
 
 		City ayacucho = new City(1, "Ayacucho");
@@ -122,7 +122,6 @@ public class Main {
 
 		map.addRoad(azul, bolivar,100);
 
-		map.addRoad(bolivar, azul,100);
 		map.addRoad(bolivar, olavarria,140);
 		map.addRoad(bolivar, pehuajo,70);
 
@@ -130,21 +129,12 @@ public class Main {
 
 		map.addRoad(olavarria, rauch,210);
 		map.addRoad(olavarria, tandil,130);
-		map.addRoad(olavarria, bolivar,140);
-
-		map.addRoad(pehuajo, ayacucho,540);
-		map.addRoad(pehuajo, bolivar,70);
-
-		map.addRoad(rauch, ayacucho,50);
+		
 		map.addRoad(rauch, tandil,60);
-		map.addRoad(rauch, olavarria,210);
 
-		map.addRoad(tandil, ayacucho,70);
-		map.addRoad(tandil, marDelPlata,200);
-		map.addRoad(tandil, rauch,60);
-		map.addRoad(tandil, olavarria,130);
-
-		System.out.println(map.getBestRoad(pehuajo, marDelPlata));
+		System.out.println(map.toString());
+//		System.out.println(map.getBestRoad(pehuajo, marDelPlata));
+		System.out.println("llega");
 //		City ayacucho = new City(1,"Ayacucho");
 //		City tandil = new City(2,"Tandil");
 //		City bolivar = new City(3,"Bolivar");

@@ -2,9 +2,9 @@ package entregable_3;
 
 import java.util.ArrayList;
 
-public class Vertex {
+public class Vertex<T> {
     private Integer id;
-    public ArrayList<Arc> arcs;
+    public ArrayList<Arc<T>> arcs;
 
     public Vertex(Integer id) {
         this.id = id;
@@ -14,39 +14,38 @@ public class Vertex {
     public Vertex() {}
 
     // Complejidad computacional: O(1)
-    public void addArc(Arc arc) {
+    public void addArc(Arc<T> arc) {
         this.arcs.add(arc);
     }
 
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
     public void deleteArc(Integer destination) {
-        for (Arc arc: arcs)
-            if (arc.getDestination() == destination)
+        for (Arc<T> arc: arcs) {
+            if (arc.getDestination().equals(destination))
                 arcs.remove(arc);
+        }
     }
 
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
-    public boolean containArc(Arc arc) {
+    public boolean containArc(Arc<T> arc) {
         return this.arcs.contains(arc);
     }
 
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
-    public Arc getArc(Integer origin, Integer destination) {
-        if (this.getId().equals(origin)) {
-            for (Arc arc : arcs)
-                if (arc.getDestination().equals(destination))
-                    return arc;
-        }
+    public Arc<T> getArc(Integer destination) {
+        for (Arc<T> arc : arcs)
+            if (arc.getDestination().equals(destination))
+                return arc;
         return null;
     }
 
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
-    public ArrayList<Arc> getArcs() {
-        ArrayList<Arc> arcsCopy = new ArrayList<Arc>(this.arcs);
+    public ArrayList<Arc<T>> getArcs() {
+        ArrayList<Arc<T>> arcsCopy = new ArrayList<>(this.arcs);
         return arcsCopy;
     }
 
@@ -66,5 +65,14 @@ public class Vertex {
         return this.id;
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder out = new StringBuilder("\n---------------------\n" +
+                "ID origen:" + this.getId() + "\n---------------------\n");
+        for (Arc<T> arc : this.arcs) {
+            out.append("\nID destino: ").append(arc.getDestination());
+            out.append("\nKm: ").append(arc.getHashtag());
+        }
+        return String.valueOf(out);
+    }
 }

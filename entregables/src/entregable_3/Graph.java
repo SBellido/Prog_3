@@ -32,16 +32,18 @@ public interface Graph<T> {
 	public Integer numberArcs();
 
 	// Obtiene un iterador que me permite recorrer todos los vertices almacenados en el grafo 
-	public Iterator<Vertex> getVertex();
+	public Iterator<Integer> getVertex();
 
 	// Obtiene un iterador que me permite recorrer todos los vertices adyacentes a verticeId 
-	public Iterator<Vertex> getAdyacent(Integer vertexId);
+	public Iterator<Integer> getAdyacent(Integer vertexId);
 
 	// Obtiene un iterador que me permite recorrer todos los arcos del grafo
-	public Iterator<Arc<T>> getArcs();
+	public Iterator<Integer> getArcs();
 		
 	// Obtiene un iterador que me permite recorrer todos los arcos que parten desde verticeId
 	public Iterator<Arc<T>> getArcs(Integer vertexId);
-	
-	
+
+	public String toString();
+
+
 }

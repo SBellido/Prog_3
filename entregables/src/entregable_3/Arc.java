@@ -49,4 +49,10 @@ public class Arc<T> {
 		return hashtag;
 	}
 
+	@Override
+	public String toString() {
+		return "\nID origen" + origin +
+				"\nID destino" + destination +
+				"\nEtiqueta: " + hashtag;
+	}
 }

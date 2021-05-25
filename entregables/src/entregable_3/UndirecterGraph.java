@@ -17,5 +17,8 @@ public class UndirecterGraph<T> extends DirecterGraph<T> {
 	}
 
 
-
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

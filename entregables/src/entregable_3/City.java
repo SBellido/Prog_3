@@ -54,4 +54,15 @@ public class City {
 		this.repearCar = repearCar;
 	}
 
+	@Override
+	public String toString() {
+		return "\n-----------------------------"+
+				"\nDATOS DE CIUDAD: " +
+				"\nid: " + id +
+				"\nNombre: '" + name + '\'' +
+				"\nEstaciones de servivio: " + servicesStation +
+				"\nBalanzas: " + thereBalance +
+				"\nRadar: " + thereRadar +
+				"\nTalleres Mecánicos: " + repearCar + "\n";
+	}
 }

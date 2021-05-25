@@ -1,12 +1,13 @@
 package entregable_3;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Road {
-    private List cities;
+    private List<City> cities;
     private Integer kms;
 
-    public Road(List cities, Integer kms) {
+    public Road(List<City> cities, Integer kms) {
         this.cities = cities;
         this.kms = kms;
     }
