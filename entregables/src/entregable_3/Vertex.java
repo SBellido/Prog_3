@@ -1,6 +1,8 @@
 package entregable_3;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Vertex<T> {
     private Integer id;
@@ -44,11 +46,14 @@ public class Vertex<T> {
 
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
-    public ArrayList<Arc<T>> getArcs() {
-        ArrayList<Arc<T>> arcsCopy = new ArrayList<>(this.arcs);
-        return arcsCopy;
+    public Iterator<Integer> getArcs() {
+        Iterator<Arc<T>> itInterno = this.arcs.iterator();
+        return new IteratorArc<T>(itInterno);
     }
 
+    public List<Arc<T>> copyListArc() {
+        return new ArrayList<Arc<T>>(this.arcs);
+    }
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
     public Integer countArcs() {

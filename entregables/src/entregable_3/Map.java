@@ -12,7 +12,7 @@ public class Map {
 	public Map() {
 		this.graph = new UndirecterGraph<Integer>();
 		this.cities = new HashMap<>();
-		this.findRoad = new FindRoad(this.graph);
+		this.findRoad = new FindRoad(this.graph, this.cities);
 	}
 
 	public void addCity(City city) {
@@ -33,10 +33,9 @@ public class Map {
 		return this.graph;
 	}
 
-	public ArrayList<Integer> getBestRoad(City origin, City destination) {
-//		Road road = new Road();
-		ArrayList<Integer> vertexs = this.findRoad.findRoad(origin, destination);
-		return vertexs;
+	public Road getBestRoad(City origin, City destination) {
+		 this.findRoad.findRoad(origin, destination);
+		 return this.findRoad.getBestRoad();
 	}
 
 	@Override

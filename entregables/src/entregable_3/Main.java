@@ -56,8 +56,11 @@ package entregable_3;
 public class Main {
 
 	public static void main(String[] args) {
-		System.setProperty("spring.devtools.restart.enabled", "false");
+
+//		System.setProperty("spring.devtools.restart.enabled", "false");
+
 		Map map = new Map();
+		Graph graph = new UndirecterGraph();
 
 		City ayacucho = new City(1, "Ayacucho");
 		ayacucho.setServicesStation(1);
@@ -119,21 +122,18 @@ public class Main {
 		map.addRoad(ayacucho,pehuajo, 540);
 		map.addRoad(ayacucho,tandil, 70);
 		map.addRoad(ayacucho,rauch, 50);
-
 		map.addRoad(azul, bolivar,100);
-
 		map.addRoad(bolivar, olavarria,140);
 		map.addRoad(bolivar, pehuajo,70);
-
 		map.addRoad(marDelPlata, tandil,200);
-
 		map.addRoad(olavarria, rauch,210);
 		map.addRoad(olavarria, tandil,130);
-		
 		map.addRoad(rauch, tandil,60);
 
-		System.out.println(map.toString());
-//		System.out.println(map.getBestRoad(pehuajo, marDelPlata));
+	//	System.out.println(map.toString());
+	//	System.out.println(graph.getAdyacent(azul.getId()));
+		System.out.println(map.getBestRoad(pehuajo, marDelPlata));
+
 		System.out.println("llega");
 //		City ayacucho = new City(1,"Ayacucho");
 //		City tandil = new City(2,"Tandil");

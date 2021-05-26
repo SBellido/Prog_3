@@ -38,7 +38,7 @@ public interface Graph<T> {
 	public Iterator<Integer> getAdyacent(Integer vertexId);
 
 	// Obtiene un iterador que me permite recorrer todos los arcos del grafo
-	public Iterator<Integer> getArcs();
+	public Iterator<Arc<T>> getArcs();
 		
 	// Obtiene un iterador que me permite recorrer todos los arcos que parten desde verticeId
 	public Iterator<Arc<T>> getArcs(Integer vertexId);
