@@ -1,5 +1,6 @@
 package entregable_3;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public interface Graph<T> {
@@ -44,6 +45,8 @@ public interface Graph<T> {
 	public Iterator<Arc<T>> getArcs(Integer vertexId);
 
 	public String toString();
+
+	public ArrayList<Vertex<T>> copyListVertex();
 
 
 }

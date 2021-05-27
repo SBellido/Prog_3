@@ -1,5 +1,6 @@
 package entregable_3;
 
+import java.awt.*;
 import java.util.*;
 
 public class FindRoad implements Comparator<Road> {
@@ -63,25 +64,32 @@ public class FindRoad implements Comparator<Road> {
 	}
 
 	public void getRoad_visit(City origin, City destination, Integer kmActual, Integer countBalances) {
-		colors.put(origin.getId(), "yellow");
+		Integer originId = origin.getId();
+		Integer detinationId = destination.getId();
+		colors.put(originId, "yellow");
 		this.partialRoad.addCity(origin);
 		this.updateCountBalance(origin);
 
 		if (this.countBalances < MAXBALANCES) {
-			if (origin.getId().equals(destination.getId())) {
+			if (originId.equals(detinationId)) {
 				//SI LLEGÓ A DESTINO COMPARA EL LARGO DEL CAMINO PARCIAL
 				//CON EL ACTUAL Y SETEA EL ACTUAL CON AL MAYOR
 				if (this.bestRoad.getKms() < this.partialRoad.getKms()) {
 					this.setBestRoad(this.partialRoad);
 				}
 			} else {
-				Iterator<Integer> itIdDestination = this.graph.getAdyacent(origin.getId());
+				Iterator<Integer> itIdDestination = this.graph.getAdyacent(originId);
 				while (itIdDestination.hasNext()) {
-					Arc<Integer> arc = this.graph.getArc(origin.getId(), itIdDestination.next());
-
-					this.partialRoad.setKms(this.partialRoad.getKms() + arc.getHashtag());
-					origin = this.cities.get(itIdDestination.next());
-					getRoad_visit(origin, destination, kmActual, countBalances);
+					Integer nextId = itIdDestination.next();
+					String actualDestiantion = colors.get(nextId);
+					if (actualDestiantion.equals("white")) {
+						Arc<Integer> arc = this.graph.getArc(originId, nextId);
+						kmActual = arc.getHashtag();
+						this.partialRoad.setKms(kmActual += arc.getHashtag());
+						origin = this.cities.get(nextId);
+						getRoad_visit(origin, destination, kmActual, countBalances);
+						//this.bestRoad.setKms(this.bestRoad.compare(this.partialRoad, this.bestRoad));
+					}
 				}
 
 			}

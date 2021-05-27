@@ -13,7 +13,9 @@ public class Road implements Comparator {
         this.kms = kms;
     }
 
-    public Road() { }
+    public Road() {
+        this.kms = 0;
+    }
 
     public void addCity(City city) {
         this.cities.add(city);
@@ -41,5 +43,12 @@ public class Road implements Comparator {
     @Override
     public int compare(Object o1, Object o2) {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return "\nCamino: " +
+                "\nCiudades: " + cities +
+                "\nkms Totales: " + kms;
     }
 }

@@ -1,7 +1,13 @@
 package entregable_3;
 
+import java.util.ArrayList;
+
 public class UndirecterGraph<T> extends DirecterGraph<T> {
 
+	public UndirecterGraph(ArrayList<Vertex<T>> listVertex) {
+		super(listVertex);
+	}
+	public UndirecterGraph(Map map) { }
 
 	@Override
 	public void addArc(Integer vertexId1, Integer vertexId2, T etiqueta) {

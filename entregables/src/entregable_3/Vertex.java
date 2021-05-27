@@ -51,7 +51,7 @@ public class Vertex<T> {
         return new IteratorArc<T>(itInterno);
     }
 
-    public List<Arc<T>> copyListArc() {
+    public ArrayList<Arc<T>> copyListArc() {
         return new ArrayList<Arc<T>>(this.arcs);
     }
     // Complejidad computacional: O(a)

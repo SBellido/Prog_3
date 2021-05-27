@@ -1,6 +1,5 @@
 package entregable_3;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Map {
@@ -10,7 +9,7 @@ public class Map {
 	private FindRoad findRoad;
 
 	public Map() {
-		this.graph = new UndirecterGraph<Integer>();
+		this.graph = new UndirecterGraph<Integer>(this);
 		this.cities = new HashMap<>();
 		this.findRoad = new FindRoad(this.graph, this.cities);
 	}

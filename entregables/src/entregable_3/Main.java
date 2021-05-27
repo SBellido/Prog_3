@@ -58,9 +58,8 @@ public class Main {
 	public static void main(String[] args) {
 
 //		System.setProperty("spring.devtools.restart.enabled", "false");
-
 		Map map = new Map();
-		Graph graph = new UndirecterGraph();
+
 
 		City ayacucho = new City(1, "Ayacucho");
 		ayacucho.setServicesStation(1);
@@ -130,11 +129,14 @@ public class Main {
 		map.addRoad(olavarria, tandil,130);
 		map.addRoad(rauch, tandil,60);
 
-	//	System.out.println(map.toString());
-	//	System.out.println(graph.getAdyacent(azul.getId()));
+
+
+		//System.out.println(graph.getAdyacent(pehuajo.getId()));
+		// System.out.println(map.toString());
+		//	System.out.println(graph.getAdyacent(azul.getId()));
 		System.out.println(map.getBestRoad(pehuajo, marDelPlata));
 
-		System.out.println("llega");
+		//System.out.println(map.toString());
 //		City ayacucho = new City(1,"Ayacucho");
 //		City tandil = new City(2,"Tandil");
 //		City bolivar = new City(3,"Bolivar");

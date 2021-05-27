@@ -1,11 +1,22 @@
 package entregable_3;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 public class DirecterGraph<T> implements Graph<T> {
-	private List<Vertex<T>> vertexs;
+	private ArrayList<Vertex<T>> vertexs;
+
+	public DirecterGraph(ArrayList<Vertex<T>> listVertex) {
+		this.vertexs = new ArrayList<Vertex<T>>(listVertex);
+		//Iterator<Vertex<T>> itVertex = this.vertexs.iterator();
+	}
+	public DirecterGraph(Map map) {
+		ArrayList<Vertex<Integer>> listVertex = map.getGraph().copyListVertex();
+
+		Iterator<Vertex<T>> itVertex = this.vertexs.iterator();
+	}
 
 	public DirecterGraph() {
 		this.vertexs = new ArrayList<>();
@@ -15,7 +26,7 @@ public class DirecterGraph<T> implements Graph<T> {
 	@Override
 	public void addVertex(Integer vertexId) {
 		Vertex<T> vertex = new Vertex<T>(vertexId);
-		this.vertexs.add(vertex);
+		 this.vertexs.add(vertex);
 	}
 
 
@@ -72,13 +83,18 @@ public class DirecterGraph<T> implements Graph<T> {
 	}
 
     public Vertex<T> getVertex(Integer id) {
-        Iterator<Vertex<T>> itVertex = this.vertexs.iterator();
+		for (Vertex vertex : vertexs)
+			if (vertex.getId().equals(id))
+				return vertex;
+        /*Iterator<Vertex<T>> itVertex = this.vertexs.iterator();
         while (itVertex.hasNext()) {
-            if (itVertex.next().getId().equals(id))
+			Integer idVertex = itVertex.next().getId();
+            if (idVertex.equals(id))
                 return itVertex.next();
         }
-        return null;
-    }
+        return null;*/
+		return null;
+	}
 
 	// Complejidad computacional: O(v*a)
 	// donde v es la cantidad de vértices que componen el grafo
@@ -141,15 +157,23 @@ public class DirecterGraph<T> implements Graph<T> {
 	// y a la cantidad de arcos que posee el vértice
 	@Override
 	public Iterator<Integer> getAdyacent(Integer vertexId) {
-		Iterator<Vertex<T>> itInterno = this.vertexs.iterator();
-		while (itInterno.hasNext()) {
-			if (itInterno.next().getId().equals(vertexId)) {
-                Vertex<T> vertex = this.getVertex(itInterno.next().getId());
-                return vertex.getArcs();
-			}
+		Vertex vertex = this.getVertex(vertexId);
+		if (this.containVertex(vertexId)) {
+			ArrayList<Arc<T>> arcs = vertex.copyListArc();
+			Iterator<Arc<T>> itInterno = arcs.iterator();
+			return new IteratorArc<>(itInterno);
 		}
 		return null;
 	}
+
+	//	while (itInterno.hasNext()) {
+	// 	if (itInterno.next().getId().equals(vertexId)) {
+	//         Vertex<T> vertex = this.getVertex(itInterno.next().getId());
+	//         return vertex.getArcs();
+	// 	}
+	// }
+	// return null;
+
 
 	// Complejidad computacional: O(v*a)
 	// donde v es la cantidad de vértices que componen el grafo
@@ -185,6 +209,10 @@ public class DirecterGraph<T> implements Graph<T> {
 			out.append(vertex.toString());
 		}
 		return out.toString();
+	}
+
+	public ArrayList<Vertex<T>> copyListVertex() {
+		return new ArrayList<Vertex<T>>(this.vertexs);
 	}
 
 }
