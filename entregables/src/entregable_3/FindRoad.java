@@ -65,19 +65,18 @@ public class FindRoad implements Comparator<Road> {
 		auxCities.add(origin); // AGREGA ORIGEN ACTUAL A LISTA AUXILIAR DE CIUDADES
 		Integer originId = origin.getId(); // OBTIENE SU ID
 		this.partialRoad.setKms(kmActual); // SETEA CANTIDAD DE KM RECORRIDOS AL CAMINO PARCIAL
-        this.colors.put(originId, "yellow"); // ACTUALIZA REGISTRO DE VISITA
+		int bestKm = this.compare(this.bestRoad, this.partialRoad); // COMPARA EL LARGO DEL CAMINO PARCIAL, CON EL MEJOR ACTUAL Y GUARDA EL MEJOR
+		this.colors.put(originId, "yellow"); // ACTUALIZA REGISTRO DE VISITA
 
 		if (originId.equals(destinationId)) { // EVALÚA SI LLEGÓ A DESTINO FINAL
-			System.out.println("llega acá");
-			int bestKm = this.compare(this.bestRoad, this.partialRoad); // COMPARA EL LARGO DEL CAMINO PARCIAL, CON EL MEJOR ACTUAL Y GUARDA EL MEJOR
 			this.bestRoad.setKms(bestKm); // SETEA KMs DEL MEJOR CAMINO ACTUAL
-			this.bestRoad.addAllCities(auxCities); // AGREGA TODAS LAS CIUDADES VISITADAS
+			this.bestRoad.addAllCities(auxCities); // AGREGA TODAS LAS CIUDADES VISITADAS AL MEJOR CAMINO ACTUAL
 		} else {
 
 			Iterator<Integer> itIdDestination = this.graph.getAdyacent(originId); //OBTIENE IDs ADYACENTES AL ORIGEN
             while (itIdDestination.hasNext())  { // ITERA MIENTRAS HAYA UN PRÓXIMO
                 Integer nextId = itIdDestination.next(); // OBTIENE ID DE UNO DE LOS DESTINOS POSIBLES
-                City nextCity = this.cities.get(nextId); // CREAUNA CIUDAD TEMPORAL A PARTIR DEL ID OBTENIDO
+                City nextCity = this.cities.get(nextId); // CREA UNA CIUDAD TEMPORAL A PARTIR DEL ID OBTENIDO
                 String actualDestination = this.colors.get(nextId);  // OBTIENE EL REGISTRO DE COLOR DE ESA CIUDAD
 
                 if (actualDestination.equals("white") && this.isBalanceOk()) { // EVALÚA SI AÚN NO REGISTRA VISITA Y LAS BALANZAS ESTÁN OK
@@ -91,7 +90,7 @@ public class FindRoad implements Comparator<Road> {
 			}
 		}
 		auxCities.remove(origin); // ELIMINA CIUDADES
-		this.colors.put(originId, "white"); //
+		this.colors.put(originId, "white"); // HABILITA PARA VOLVER A VISITAR ESA CIUDAD
 
 	}
 
