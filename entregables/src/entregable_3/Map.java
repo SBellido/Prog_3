@@ -1,6 +1,8 @@
 package entregable_3;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Map {
 
@@ -32,9 +34,11 @@ public class Map {
 		return this.graph;
 	}
 
+
 	public Road getBestRoad(City origin, City destination) {
-		 this.findRoad.findRoad(origin, destination);
-		 return this.findRoad.getBestRoad();
+		Integer destinationId = destination.getId();
+		this.findRoad.findRoad(origin, destinationId, 0);
+		return this.findRoad.getBestRoad();
 	}
 
 	@Override

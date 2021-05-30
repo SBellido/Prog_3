@@ -2,128 +2,109 @@ package entregable_3;
 
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class FindRoad implements Comparator<Road> {
 
 	private final int MAXBALANCES = 2;
 	private Graph<Integer> graph;
 	private HashMap<Integer, City> cities;
-	private HashMap<Integer, String> colors;
-	private Road partialRoad;
-	private Road bestRoad;
-	private Integer countKm;
-	private int countBalances;
+    private HashMap<Integer, String> colors;
+    private Road partialRoad;
+    private Road bestRoad;
+    private int countBalances;
 
 	public FindRoad() {}
-	public FindRoad(Graph<Integer> graph, Integer origin, Integer destination) {
-		this.graph = graph;
-		this.colors = new HashMap<>();
-		this.partialRoad = new Road();
-		this.bestRoad = new Road();
-		this.countKm = 0;
-		this.countBalances = 0;
-	}
-
 
 	public FindRoad(Graph<Integer> graph, HashMap<Integer, City> cities) {
-		this.cities = cities;
-		this.graph = graph;
-		this.colors = new HashMap<>();
+        this.graph = graph;
+        this.cities = cities;
+        this.colors = new HashMap<>();
 		this.partialRoad = new Road();
 		this.bestRoad = new Road();
-		this.countKm = 0;
 		this.countBalances = 0;
 	}
+
 
 	@Override
 	public int compare(Road road1, Road road2) {
-		if (road1.getKms() > road2.getKms()) {
-			return road1.getKms();
-		} else {
-			return road2.getKms();
-		}
+		return Math.max(road1.getKms(), road2.getKms());
 	}
+
 
 	private void updateCountBalance(City origin) {
 		if (isWeighsInOrigin(origin))
 			this.countBalances++;
 	}
 
+	private void downgradeCountBalance(City origin) {
+		if (!isWeighsInOrigin(origin) && this.countBalances > 0)
+            this.countBalances--;
+	}
+
+
 	private boolean isWeighsInOrigin(City origin) {
 		return origin.isThereBalance();
 	}
 
-	public void findRoad(City origin, City destination) {
 
+	public void findRoad(City origin, Integer destinationId, Integer kmActual) {
+		List<City> auxCities = new ArrayList<>();
 		Iterator<Integer> itVertex = this.graph.getVertex();
+
 		while (itVertex.hasNext()) {
 			Integer vertexIdActual = itVertex.next();
 			colors.put(vertexIdActual, "white");
 		}
-		getRoad_visit(origin, destination, this.countKm, this.countBalances);
+		this.getRoad_visit(origin, destinationId, kmActual, auxCities);
+
 	}
 
-	public void getRoad_visit(City origin, City destination, Integer kmActual, Integer countBalances) {
-		Integer originId = origin.getId();
-		Integer detinationId = destination.getId();
-		colors.put(originId, "yellow");
-		this.partialRoad.addCity(origin);
-		this.updateCountBalance(origin);
 
-		if (this.countBalances < MAXBALANCES) {
-			if (originId.equals(detinationId)) {
-				//SI LLEGÓ A DESTINO COMPARA EL LARGO DEL CAMINO PARCIAL
-				//CON EL ACTUAL Y SETEA EL ACTUAL CON AL MAYOR
-				if (this.bestRoad.getKms() < this.partialRoad.getKms()) {
-					this.setBestRoad(this.partialRoad);
-				}
-			} else {
-				Iterator<Integer> itIdDestination = this.graph.getAdyacent(originId);
-				while (itIdDestination.hasNext()) {
-					Integer nextId = itIdDestination.next();
-					String actualDestiantion = colors.get(nextId);
-					if (actualDestiantion.equals("white")) {
-						Arc<Integer> arc = this.graph.getArc(originId, nextId);
-						kmActual = arc.getHashtag();
-						this.partialRoad.setKms(kmActual += arc.getHashtag());
-						origin = this.cities.get(nextId);
-						getRoad_visit(origin, destination, kmActual, countBalances);
-						//this.bestRoad.setKms(this.bestRoad.compare(this.partialRoad, this.bestRoad));
-					}
+	private void getRoad_visit(City origin, Integer destinationId, int kmActual, List<City> auxCities) {
+		auxCities.add(origin); // AGREGA ORIGEN ACTUAL A LISTA AUXILIAR DE CIUDADES
+		Integer originId = origin.getId(); // OBTIENE SU ID
+		this.partialRoad.setKms(kmActual); // SETEA CANTIDAD DE KM RECORRIDOS AL CAMINO PARCIAL
+        this.colors.put(originId, "yellow"); // ACTUALIZA REGISTRO DE VISITA
+
+		if (originId.equals(destinationId)) { // EVALÚA SI LLEGÓ A DESTINO FINAL
+			System.out.println("llega acá");
+			int bestKm = this.compare(this.bestRoad, this.partialRoad); // COMPARA EL LARGO DEL CAMINO PARCIAL, CON EL MEJOR ACTUAL Y GUARDA EL MEJOR
+			this.bestRoad.setKms(bestKm); // SETEA KMs DEL MEJOR CAMINO ACTUAL
+			this.bestRoad.addAllCities(auxCities); // AGREGA TODAS LAS CIUDADES VISITADAS
+		} else {
+
+			Iterator<Integer> itIdDestination = this.graph.getAdyacent(originId); //OBTIENE IDs ADYACENTES AL ORIGEN
+            while (itIdDestination.hasNext())  { // ITERA MIENTRAS HAYA UN PRÓXIMO
+                Integer nextId = itIdDestination.next(); // OBTIENE ID DE UNO DE LOS DESTINOS POSIBLES
+                City nextCity = this.cities.get(nextId); // CREAUNA CIUDAD TEMPORAL A PARTIR DEL ID OBTENIDO
+                String actualDestination = this.colors.get(nextId);  // OBTIENE EL REGISTRO DE COLOR DE ESA CIUDAD
+
+                if (actualDestination.equals("white") && this.isBalanceOk()) { // EVALÚA SI AÚN NO REGISTRA VISITA Y LAS BALANZAS ESTÁN OK
+                    this.updateCountBalance(nextCity); // ACTUALIZA CONTEO DE BALANZAS
+					Arc<Integer> arc = this.graph.getArc(originId, nextId); // OBTIENE EL ARCO ENTRE ORIGEN ACTUAL Y DESTINO ACTUAL
+					kmActual = kmActual + arc.getHashtag(); // ACTUALIZA KM RECORRIDOS
+					this.getRoad_visit(nextCity, destinationId, kmActual, auxCities); // LLAMA RECURSIVAMENTE CON PARÁMETROS ACTUALIZADOS
 				}
 
+				this.downgradeCountBalance(nextCity); // RESTA ÚLTIMO VALOR CARGADO
 			}
-
-//			terator<Vertex<T>> itInterno = this.vertexs.iterator();
-//			return new IteratorVertex<T>(itInterno);
 		}
+		auxCities.remove(origin); // ELIMINA CIUDADES
+		this.colors.put(originId, "white"); //
+
 	}
 
+	private boolean isBalanceOk() {
+		return this.countBalances < MAXBALANCES;
+	}
 
 	public Road getBestRoad() {
 		return this.bestRoad;
 	}
 
-
 	public void setBestRoad(Road bestRoad) {
 		this.bestRoad = bestRoad;
-	}
-
-	public Integer getKm() {
-		return this.countKm;
-	}
-
-
-	public void setKm(Integer countKm) {
-		this.countKm = countKm;
-	}
-
-	public Integer getCountKm() {
-		return countKm;
-	}
-
-	public void setCountKm(Integer countKm) {
-		this.countKm = countKm;
 	}
 
 	public int getCountBalances() {
@@ -133,6 +114,8 @@ public class FindRoad implements Comparator<Road> {
 	public void setCountBalances(Integer countBalances) {
 		this.countBalances = countBalances;
 	}
+
+
 }
 
 

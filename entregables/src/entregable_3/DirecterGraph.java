@@ -1,7 +1,6 @@
 package entregable_3;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -82,8 +81,8 @@ public class DirecterGraph<T> implements Graph<T> {
 		return false;
 	}
 
-    public Vertex<T> getVertex(Integer id) {
-		for (Vertex vertex : vertexs)
+    private Vertex<T> getVertex(Integer id) {
+		for (Vertex vertex : this.vertexs)
 			if (vertex.getId().equals(id))
 				return vertex;
         /*Iterator<Vertex<T>> itVertex = this.vertexs.iterator();
@@ -157,7 +156,7 @@ public class DirecterGraph<T> implements Graph<T> {
 	// y a la cantidad de arcos que posee el vértice
 	@Override
 	public Iterator<Integer> getAdyacent(Integer vertexId) {
-		Vertex vertex = this.getVertex(vertexId);
+		Vertex<T> vertex = this.getVertex(vertexId);
 		if (this.containVertex(vertexId)) {
 			ArrayList<Arc<T>> arcs = vertex.copyListArc();
 			Iterator<Arc<T>> itInterno = arcs.iterator();

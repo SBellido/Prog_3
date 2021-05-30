@@ -134,7 +134,7 @@ public class Main {
 		//System.out.println(graph.getAdyacent(pehuajo.getId()));
 		// System.out.println(map.toString());
 		//	System.out.println(graph.getAdyacent(azul.getId()));
-		System.out.println(map.getBestRoad(pehuajo, marDelPlata));
+		System.out.println(map.getBestRoad(bolivar, rauch));
 
 		//System.out.println(map.toString());
 //		City ayacucho = new City(1,"Ayacucho");

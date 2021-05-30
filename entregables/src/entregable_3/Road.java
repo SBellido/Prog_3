@@ -1,20 +1,23 @@
 package entregable_3;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-public class Road implements Comparator {
+public class Road {
     private List<City> cities = new ArrayList<City>();
     private Integer kms;
+    private Integer kmsPartial;
 
-    public Road(List<City> cities, Integer kms) {
+
+    public Road(List<City> cities, Integer kms, Integer kmsPartial) {
         this.cities = cities;
         this.kms = kms;
+        this.kmsPartial = kmsPartial;
     }
 
     public Road() {
         this.kms = 0;
+        this.kmsPartial = 0;
     }
 
     public void addCity(City city) {
@@ -28,27 +31,65 @@ public class Road implements Comparator {
     public List<City> getListCities() {
         return new ArrayList<>(this.cities);
     }
-    public City getCityFromId(Integer id) {
+
+    public void deleteCity(City cityToDelete) {
         for (City city : this.cities)
-            if (city.getId().equals(id))
+            if (city.getId().equals(cityToDelete.getId()))
+                this.cities.remove(cityToDelete);
+    }
+
+    public void addAllCities(List<City> cities) {
+        this.cities.addAll(cities);
+    }
+
+    public City getCityFromId(Integer cityId) {
+        for (City city : this.cities)
+            if (city.getId().equals(cityId))
                 return city;
         return null;
     }
 
-    public Integer getKms() {
-        return kms;
-    }
-
-
-    @Override
-    public int compare(Object o1, Object o2) {
-        return 0;
-    }
+   /* @Override
+    public int compare(Road road1, Road road2) {
+        int longest = 0;
+        if (road1.getKmsPartial() < road2.getKmsPartial()) {
+            longest = road2.getKmsPartial();
+            return longest;
+        } else {
+            longest = road2.getKmsPartial();
+        }
+        return longest;
+    }*/
 
     @Override
     public String toString() {
         return "\nCamino: " +
-                "\nCiudades: " + cities +
-                "\nkms Totales: " + kms;
+                "\nCiudades: " + this.cities +
+                "\nkms Totales: " + this.getKms() +
+                "\n-------------------------------- fin";
     }
+
+
+    // GETERS & SETTERS
+    public Integer getKms() {
+        return this.kms;
+    }
+
+    public void setKmsTotal(Integer kms) {
+        this.kms = kms;
+    }
+
+    public void setKmsPartial(Integer kmsPartial) {
+        this.kmsPartial = kmsPartial;
+    }
+
+    public Integer getKmsTotal() {
+        return this.kms;
+    }
+
+    public Integer getKmsPartial() {
+        return kmsPartial;
+    }
+
+
 }
