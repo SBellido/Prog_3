@@ -75,7 +75,7 @@ public class DirecterGraph<T> implements Graph<T> {
 	// donde v es la cantidad de vértices que componen el grafo
 	@Override
 	public boolean containVertex(Integer vertexId) {
-		for (Vertex<T> vertex : vertexs)
+		for (Vertex<T> vertex : this.vertexs)
 			if (vertex.getId().equals(vertexId))
 				return true;
 		return false;
