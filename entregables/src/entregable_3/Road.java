@@ -39,6 +39,7 @@ public class Road {
     }
 
     public void addAllCities(List<City> cities) {
+        this.cities.clear();
         this.cities.addAll(cities);
     }
 

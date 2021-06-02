@@ -6,10 +6,12 @@ import java.util.List;
 
 public class DirecterGraph<T> implements Graph<T> {
 	private ArrayList<Vertex<T>> vertexs;
+	//private Iterator<Vertex<T>> itVertex;
 
 	public DirecterGraph(ArrayList<Vertex<T>> listVertex) {
 		this.vertexs = new ArrayList<Vertex<T>>(listVertex);
-		//Iterator<Vertex<T>> itVertex = this.vertexs.iterator();
+		//this.itVertex = this.vertexs.iterator();
+
 	}
 	public DirecterGraph(Map map) {
 		ArrayList<Vertex<Integer>> listVertex = map.getGraph().copyListVertex();
@@ -38,7 +40,7 @@ public class DirecterGraph<T> implements Graph<T> {
 		Iterator<Vertex<T>> itVertex = this.vertexs.iterator();
 		while (itVertex.hasNext() && !vertexRemove)
 			if (vertexId.equals(itVertex.next().getId())) {
-				vertexs.remove(itVertex.next());
+				this.vertexs.remove(itVertex.next());
 				vertexRemove = true;
 			}
 	}
