@@ -2,7 +2,6 @@ package entregable_3;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class Vertex<T> {
     private Integer id;
@@ -91,4 +90,5 @@ public class Vertex<T> {
         }
         return String.valueOf(out);
     }
+    
 }

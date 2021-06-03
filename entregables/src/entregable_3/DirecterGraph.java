@@ -1,7 +1,5 @@
 package entregable_3;
 
-import com.sun.source.tree.WhileLoopTree;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -230,52 +228,3 @@ public class DirecterGraph<T> implements Graph<T> {
 	}
 
 }
-
-
-
-// Complejidad computacional: O(v*a)
-// donde v es la cantidad de vértices que componen el grafo
-// y a la cantidad de arcos que posee el vértice
-//	@Override
-//	public void addArc(Integer origin, Integer destination, T hashtag) {
-//		boolean isAdded = false;
-//		Arc<T> newArc = new Arc<T>(origin, destination, hashtag);
-//		Iterator<Integer> intIteratorVertex = this.getVertex();
-//
-//		while (intIteratorVertex.hasNext() && !isAdded) {
-//			Integer idOrigin = intIteratorVertex.next();
-//			if (idOrigin.equals(origin)) {
-//				isAdded = true;
-//				Vertex<T> vertex = this.vertexs.get(idOrigin);
-//				this.vertexs.add(idOrigin, vertex);
-//			}
-//		}
-//	}
-//@Override
-//public Iterator<Arc<T>> getArcs() {
-//    List<Arc<T>> finalList = new ArrayList<Arc<T>>();
-//    for (Vertex<T> vertex : vertexs) {
-//        List<Arc<T>> arcs = vertex.copyListArc();
-//        finalList.addAll(arcs);
-//    }
-//    return finalList.iterator();
-//		Iterator<Integer> itVertex = this.getVertex();
-//		List<Arc<T>> arcs = new ArrayList<Arc<T>>();
-//		Iterator<Arc<T>> itArc = arcs.iterator();
-//		for (Vertex vertex : this.vertexs) {
-//			arcs.addAll(vertex.getArcs());
-//		}
-//		while (itVertex.hasNext()) {
-//			itVertex.next()
-//		}
-//		return itArc;
-//}
-/*@Override
-	public Iterator<Integer> getAdyacent(Integer vertexId) {
-		for (Vertex<T> vertex : this.vertexs) {
-			if (vertex.getId().equals(vertexId))
-				return vertex.getArcs();
-		}
-		return null;
-	}
-*/

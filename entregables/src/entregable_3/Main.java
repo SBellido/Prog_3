@@ -57,9 +57,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-//		System.setProperty("spring.devtools.restart.enabled", "false");
 		Map map = new Map();
-
 
 		City ayacucho = new City(1, "Ayacucho");
 		ayacucho.setServicesStation(1);
