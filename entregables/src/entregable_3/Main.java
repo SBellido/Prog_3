@@ -131,45 +131,7 @@ public class Main {
 
 
 
-		//System.out.println(graph.getAdyacent(pehuajo.getId()));
-		// System.out.println(map.toString());
-		//	System.out.println(graph.getAdyacent(azul.getId()));
-		System.out.println(map.getBestRoad(bolivar, tandil));
-
-		//System.out.println(map.toString());
-//		City ayacucho = new City(1,"Ayacucho");
-//		City tandil = new City(2,"Tandil");
-//		City bolivar = new City(3,"Bolivar");
-//
-//		Map mapa = new Map();
-//
-//		mapa.addCity(ayacucho); // Agrego ayacucho
-//		mapa.addCity(tandil); // Agrego tandil
-//		mapa.addCity(bolivar); // Agrego bolivar
-//
-//		mapa.addRoute(ayacucho, tandil, 70); // Agrego la ruta entre ayacucho-tandil de 70km
-//
-		
-//		mapa.encontrarCamino(ayacucho, bolivar); // Busco el mejor camino entre ayacucho y bolivar
-		
-//		mapa.deleteCity(ayacucho); // Borro la ciudad ayacucho
-//		mapa.borrarRuta(ayacucho, tandil); // Borro la ruta entre ayacucho-tandil
-
-
-		// Creo un grafo dirigdo donde las etiquetas de los arcos son valores Float
-	//	DirecterGraph<Float> grafito = new DirecterGraph<>();
-
-		// Agrego los vertices 1 y 2
-//		grafito.agregarVertice(1);
-//		grafito.agregarVertice(2);
-
-		// Genero un arco desde 1 hasta 2 con el valor de etiqueta 3
-//		grafito.agregarArco(1, 2, 3F);
-
-		// Obtengo el arco entre 1 y 2, y le pido la etiqueta
-//		Float etiqueta = grafito.obtenerArco(1, 2).getEtiqueta();
-
-//		System.out.println(etiqueta); // Deber�a imprimir 3
+		System.out.println(map.getBestRoad(marDelPlata, ayacucho));
 
 	}
 

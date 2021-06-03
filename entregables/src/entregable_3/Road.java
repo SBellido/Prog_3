@@ -50,21 +50,9 @@ public class Road {
         return null;
     }
 
-   /* @Override
-    public int compare(Road road1, Road road2) {
-        int longest = 0;
-        if (road1.getKmsPartial() < road2.getKmsPartial()) {
-            longest = road2.getKmsPartial();
-            return longest;
-        } else {
-            longest = road2.getKmsPartial();
-        }
-        return longest;
-    }*/
-
     @Override
     public String toString() {
-        return "\nCamino: " +
+        return "\nEL CAMINO POSIBLE MÁS CORTO: " +
                 "\nCiudades: " + this.cities +
                 "\nkms Totales: " + this.getKms() +
                 "\n-------------------------------- fin";
