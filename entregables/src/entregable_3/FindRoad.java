@@ -57,7 +57,7 @@ public class FindRoad {
 	}
 
 	private void getRoad_visit(City origin, Integer destinationId, int kmActual, List<City> auxCities) {
-        Integer originId = origin.getId(); // OBTIENE SU ID
+        Integer originId = origin.getId(); // OBTIENE ID DE CIUDAD ORIGEN
         auxCities.add(origin); // AGREGA ORIGEN ACTUAL A LISTA AUXILIAR DE CIUDADES
 		this.partialRoad.setKms(kmActual); // SETEA CANTIDAD DE KM RECORRIDOS AL CAMINO PARCIAL
 		this.colors.put(originId, "yellow"); // ACTUALIZA REGISTRO DE VISITA
@@ -83,16 +83,15 @@ public class FindRoad {
                     this.getRoad_visit(nextCity, destinationId, kmActual, auxCities); // LLAMA RECURSIVAMENTE CON PARÁMETROS ACTUALIZADOS
 
 					kmActual -= arc.getHashtag(); // RESTA LOS KM
-					this.partialRoad.setKmsPartial(kmActual);
-					this.downgradeCountBalance(nextCity); // RESTA UNA BALANZA
+					this.partialRoad.setKmsPartial(kmActual); // SETTEA KM CON EL VALOR ACTUALIZADO
+					this.downgradeCountBalance(nextCity); // RESTA UNA BALANZA LA LA ÚLTIMA CIUDAD TENÍA BASLANZA
 				}
             }
 		}
-		auxCities.remove(origin);// ELIMINA CIUDAD
+		auxCities.remove(origin);// ELIMINA CIUDAD DEL CAMINO PARCIAL
         this.colors.put(originId, "white"); // HABILITA PARA VOLVER A VISITAR ESA CIUDAD
 
 	}
-
 
 	private boolean isBalanceOk() {
 		return this.countBalances < MAXBALANCES;
@@ -115,10 +114,3 @@ public class FindRoad {
 	}
 
 }
-
-
-//List<City> citiesVisit = new ArrayList<>();
-//Iterator<City> itCity = citiesVisit.iterator();
-//IteratorCity<Integer> itIdCity = new IteratorCity<>(itCity);
-//grafo dame todos los arcos
-

@@ -20,12 +20,19 @@ public class Vertex<T> {
         this.arcs.add(arc);
     }
 
+
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
     public void deleteArc(Integer destination) {
-        for (Arc<T> arc: arcs) {
-            if (arc.getDestination().equals(destination))
-                arcs.remove(arc);
+        boolean removed = false;
+        Iterator <Arc<T>> itArc = this.arcs.iterator();
+
+        while (!removed && itArc.hasNext()) {
+            Arc<T> arc = itArc.next();
+            if (arc.getDestination().equals(destination)) {
+                itArc.remove();
+                removed = true;
+            }
         }
     }
 
@@ -54,6 +61,7 @@ public class Vertex<T> {
     public ArrayList<Arc<T>> copyListArc() {
         return new ArrayList<Arc<T>>(this.arcs);
     }
+
     // Complejidad computacional: O(a)
     // donde a es la cantidad de arcos que posee el vértice
     public Integer countArcs() {
@@ -70,6 +78,9 @@ public class Vertex<T> {
         return this.id;
     }
 
+
+    // Complejidad computacional: O(a)
+    // donde a es la cantidad de arcos que posee el vértice
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder("\n---------------------\n" +
