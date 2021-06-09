@@ -15,15 +15,18 @@ public class DirecterGraph<T> implements Graph<T> {
 		this.vertexs = new ArrayList<>();
 	}
 
-	//	Complejidad computacional: O(1)
+	//	Complejidad computacional: O(v)
+	// donde v es la cantidad de vértices que componen el grafo
 	@Override
 	public void addVertex(Integer vertexId) {
-		Vertex<T> vertex = new Vertex<T>(vertexId);
-		 this.vertexs.add(vertex);
+		if (!this.containVertex(vertexId)) {
+			Vertex<T> vertex = new Vertex<T>(vertexId);
+			this.vertexs.add(vertex);
+		}
 	}
 
 
-	// Complejidad computacional: O(v)
+	// Complejidad computacional: O(v*a)
 	// donde v es la cantidad de vértices que componen el grafo
 	// y a la cantidad de arcos que posee el vértice
 	@Override
@@ -31,26 +34,29 @@ public class DirecterGraph<T> implements Graph<T> {
 		boolean vertexRemoved = false;
 
 		Iterator<Vertex<T>> itVertex = this.vertexs.iterator();
-		while (itVertex.hasNext() && !vertexRemoved) {
+		while (!vertexRemoved && itVertex.hasNext()) {
 			if (vertexId.equals(itVertex.next().getId())) {
-				this.vertexs.remove(itVertex.next());
+				this.deleteArcLoose(vertexId);
+				itVertex.remove();
 				vertexRemoved = true;
 			}
 		}
-		this.deleteArcLoose(itVertex, vertexId);
 	}
 
 
-	// Complejidad computacional: O(v*a)
+	// Complejidad computacional: O(a)
 	// donde v es la cantidad de vértices adyacentes del vértice actual
 	// y a la cantidad de arcos que posee cada vértice
-	private void deleteArcLoose(Iterator<Vertex<T>> itVertex, Integer vertexId) {
-		Vertex<T> vertex = itVertex.next();
-		Integer idVertex = vertex.getId();
-		Iterator<Integer> itIdDestination = this.getAdyacent(idVertex);
+	private void deleteArcLoose(Integer vertexId) {
+		boolean arcRemoved = false;
+		Iterator<Integer> itIdDestination = this.getAdyacent(vertexId);
 
-		while (itIdDestination.hasNext())
-			vertex.deleteArc(idVertex);
+		while (!arcRemoved && itIdDestination.hasNext()) {
+			if (itIdDestination.next().equals(vertexId)) {
+				itIdDestination.remove();
+				arcRemoved = true;
+			}
+		}
 	}
 
 
@@ -145,7 +151,7 @@ public class DirecterGraph<T> implements Graph<T> {
 	}
 
 
-	// Complejidad computacional: O(a)
+	// Complejidad computacional: O(v*a)
 	// donde v es la cantidad de vértices que componen el grafo
 	// y a la cantidad de arcos que posee el vértice
 	@Override
@@ -223,6 +229,7 @@ public class DirecterGraph<T> implements Graph<T> {
 
 
 	// Complejidad computacional: O(1)
+	@Override
 	public ArrayList<Vertex<T>> copyListVertex() {
 		return new ArrayList<Vertex<T>>(this.vertexs);
 	}

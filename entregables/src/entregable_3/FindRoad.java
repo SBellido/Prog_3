@@ -3,7 +3,7 @@ package entregable_3;
 import java.util.*;
 import java.util.List;
 
-public class FindRoad {
+public class   FindRoad {
 
 	private final int MAXBALANCES = 2;
 	private Graph<Integer> graph;
