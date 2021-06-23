@@ -1,11 +1,11 @@
 package entregable_4;
 
-public class Employee {
-    private int id;
+public class Employee implements Comparable<Employee> {
+    private final int id;
     private String name;
     private String surname;
     private int age;
-    private int workForce;
+    private Integer workForce;
 
     public Employee(int id, String name, String surname, int age, int workForce) {
         this.id = id;
@@ -18,12 +18,17 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Empleado" +
+        return "\nEmpleado" +
                 ", id: " + id +
                 ", Nombre: " + name +
                 ", Apellido: " + surname +
                 ", Edad: " + age +
                 ", Fuerza laboral: " + workForce;
+    }
+
+    @Override
+    public int compareTo(Employee employee) {
+        return  employee.getWorkForce().compareTo(this.getWorkForce());
     }
 
     // GETTERS & SETTERS
@@ -51,7 +56,7 @@ public class Employee {
         this.age = age;
     }
 
-    public int getWorkForce() {
+    public Integer getWorkForce() {
         return workForce;
     }
 
