@@ -27,19 +27,19 @@ public class Business {
 
     }
 
-    public void makeTehBestProductiveGroups(ArrayList<Employee> groupComplete) {
+    public void makeTheBestProductiveGroups(ArrayList<Employee> groupComplete) {
         this.finalDiference = Integer.MAX_VALUE;
         this.group_1 = new WorkGroup();
         this.group_2 = new WorkGroup();
         Collections.sort(groupComplete);
-        this.makeTehBestProductiveGroups(groupComplete, new WorkGroup(), new WorkGroup());
+        this.makeTheBestProductiveGroups(groupComplete, new WorkGroup(), new WorkGroup());
     }
 
     // BACKTRACKING
-    private void makeTehBestProductiveGroups(ArrayList<Employee> groupComplete, WorkGroup group_1, WorkGroup group_2) {
+    private void makeTheBestProductiveGroups(ArrayList<Employee> groupComplete, WorkGroup group_1, WorkGroup group_2) {
 
+        int partialDiference = this.getDiference(group_1, group_2);
         if (this.isSolution(groupComplete)) { // SI LA LISTA DE ENTRADA ESTÁ VACÍA ES SOLUCIÓN
-            int partialDiference = this.getDiference(group_1, group_2);
             if (partialDiference < this.finalDiference) { // SI LA DIFERENCIA DE FUERZA DE TRABAJO PARCIAL ES MENOR, ES MEJOR SOLUCIÓN
                 this.finalDiference = partialDiference;
                 this.group_1.addEmployees(group_1.getGroup()); // AGREGA EN G1 LA LISTA PARCIAL A LA LISTA FINAL
@@ -47,24 +47,47 @@ public class Business {
             }
         } else {
 
-            // al grupo que menos fuerza tiene le sumo toda la fuerza que me quedo afuera,
-            // si ese valor es más grande que la diferencia parcial, ya no puedo mejorar,.. esto es PODA
-            this.upCount();
-            Employee employeeAux = groupComplete.remove(0);
-            group_1.addEmployee(employeeAux); // ELIMINA EL PRIMERO DEL GRUPO DE ENTRADA Y LO AGREGA EN G1
-            this.makeTehBestProductiveGroups(groupComplete, group_1, group_2); // LLAMADO RECURSIVO
-            group_1.removeLast();
-            group_2.addEmployee(employeeAux); // ELIMINA EL PRIMERO DEL GRUPO DE ENTRADA Y LO AGREGA EN G2
+           if (this.isItFeasible(group_1, group_2, groupComplete, partialDiference)) { // PODA
+                this.upCount(); // INCREMENTA EL CONTADOR
+                Employee employeeAux = groupComplete.remove(0); // ELIMINA PRIMER EMPLEADO DE LISTA Y GUARDA UNA COPIA
+                group_1.addEmployee(employeeAux); // AGREGA EN G1 EL EMPLEADO ELIMINADO DE LA LISTA DE ENTRADA
 
-            this.makeTehBestProductiveGroups(groupComplete, group_1, group_2); // LLAMADO RECURSIVO
+                this.makeTheBestProductiveGroups(groupComplete, group_1, group_2); // LLAMADO RECURSIVO DE BACKTRACKING
+                group_1.removeLast(); // ELIMINA ÚLTIMO EMPLEADO DEL GRUPO 1
+                group_2.addEmployee(employeeAux); // AGREGA EN G2 EL EMPLEADO ELIMINADO DE LA LISTA DE ENTRADA
 
-            group_2.removeLast();
-            groupComplete.add(0, employeeAux);
-
-
+                this.makeTheBestProductiveGroups(groupComplete, group_1, group_2); // LLAMADO RECURSIVO DE BACKTRACKING
+                group_2.removeLast(); // ELIMINA ÚLTIMO EMPLEADO DEL GRUPO 2
+                groupComplete.add(0, employeeAux);
+            }
 
         }
     }
+
+    private boolean isItFeasible(WorkGroup group_1, WorkGroup group_2, ArrayList<Employee> groupComplete, int partialDiference) {
+        // al grupo que menos fuerza tiene le sumo toda la fuerza que me quedo afuera,
+        // si ese valor es más grande que la diferencia parcial, ya no puedo mejorar.
+        WorkGroup weakestGroup = this.getWeakestGroup(group_1, group_2);
+        int pendingForce = this.getWorkForce(groupComplete);
+        int result = pendingForce + weakestGroup.getWorkForce();
+        return result > partialDiference;
+    }
+
+    private int getWorkForce(ArrayList<Employee> groupComplete) {
+        int workForceTotal = 0;
+        for (Employee employee : groupComplete)
+            workForceTotal += employee.getWorkForce();
+        return workForceTotal;
+    }
+
+    private WorkGroup getWeakestGroup(WorkGroup group_1, WorkGroup group_2) {
+        if (group_1.getWorkForce() < group_2.getWorkForce()) {
+            return group_1;
+        } else {
+            return group_2;
+        }
+    }
+
 
     private int getDiference(WorkGroup group_1, WorkGroup group_2) {
         int diference = 0;

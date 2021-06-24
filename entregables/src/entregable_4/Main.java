@@ -124,15 +124,15 @@ public class Main {
 
         // backtracking
         System.out.println("RESULTADOS BACKTRACKING");
-        business1.makeTehBestProductiveGroups(entry1);
-        business2.makeTehBestProductiveGroups(entry2);
-        business3.makeTehBestProductiveGroups(entry3);
-        business4.makeTehBestProductiveGroups(entry4);
-        business5.makeTehBestProductiveGroups(entry5);
-        business6.makeTehBestProductiveGroups(entry6);
-        business7.makeTehBestProductiveGroups(entry7);
-        business8.makeTehBestProductiveGroups(entry8);
-        business9.makeTehBestProductiveGroups(entry9);
+        business1.makeTheBestProductiveGroups(entry1);
+        business2.makeTheBestProductiveGroups(entry2);
+        business3.makeTheBestProductiveGroups(entry3);
+        business4.makeTheBestProductiveGroups(entry4);
+        business5.makeTheBestProductiveGroups(entry5);
+        business6.makeTheBestProductiveGroups(entry6);
+        business7.makeTheBestProductiveGroups(entry7);
+        business8.makeTheBestProductiveGroups(entry8);
+        business9.makeTheBestProductiveGroups(entry9);
 
 //        business.makeTehBestProductiveGroups(entry3, 0, 0, group_1, group_2);
 //        business.makeTehBestProductiveGroups(entry4, 0, 0, group_1, group_2);
