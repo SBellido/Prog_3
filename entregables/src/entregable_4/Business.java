@@ -17,16 +17,36 @@ public class Business {
         this.group_2 = new WorkGroup();
     }
 
-    // GREEDY
+    // PREPARA CONTEXTO PARA GREEDY Y LO LLAMA
     public void makeProductiveGroups(ArrayList<Employee> groupComplete) {
-        List<Employee> groupEmployees = new ArrayList<>();
-        // MI CANDIDTO ES EL EMPLEADO Y EL GRUPO QUE MENOS FUERZA TIENE
-        while (!groupComplete.isEmpty() && !this.isSolution(groupComplete)) {
-            ArrayList<Employee> bestTwo = this.toSelect(groupComplete);
+        this.finalDiference = Integer.MAX_VALUE;
+        this.group_1 = new WorkGroup();
+        this.group_2 = new WorkGroup();
+        Collections.sort(groupComplete);
+        this.makeProductiveGroups(groupComplete, new WorkGroup(), new WorkGroup());
+    }
+
+    // ALGORITMO GREEDY
+    private void makeProductiveGroups(ArrayList<Employee> groupComplete, WorkGroup group_1, WorkGroup group_2) {
+
+        int partialDiference = this.getDiference(group_1, group_2); // CALCULA DIFERENCIA PARCIAL DE FUERZA LABORAL
+
+        while (!this.isSolution(groupComplete)) {
+            this.upCount();
+            Employee employeeTemp = this.toSelect(groupComplete); // SELECCIONA EL CANDIDATO Y LO ELIMINA DE LA LISTA DE ENTRAAD
+
+            if (group_1.getWorkForce() < group_2.getWorkForce()) {
+                group_1.addEmployee(employeeTemp);
+            } else {
+                group_2.addEmployee(employeeTemp);
+            }
         }
+        this.group_1.addEmployees(group_1.getGroup());
+        this.group_2.addEmployees(group_2.getGroup());
 
     }
 
+    // PREPARA CONTEXTO PARA BACKTRACKING Y LO LLAMA
     public void makeTheBestProductiveGroups(ArrayList<Employee> groupComplete) {
         this.finalDiference = Integer.MAX_VALUE;
         this.group_1 = new WorkGroup();
@@ -35,13 +55,14 @@ public class Business {
         this.makeTheBestProductiveGroups(groupComplete, new WorkGroup(), new WorkGroup());
     }
 
-    // BACKTRACKING
+    // ALGORITMO BACKTRACKING
     private void makeTheBestProductiveGroups(ArrayList<Employee> groupComplete, WorkGroup group_1, WorkGroup group_2) {
 
-        int partialDiference = this.getDiference(group_1, group_2);
+        int partialDiference = this.getDiference(group_1, group_2); // CALCULA DIFERENCIA PARCIAL DE FUERZA LABORAL
+
         if (this.isSolution(groupComplete)) { // SI LA LISTA DE ENTRADA ESTÁ VACÍA ES SOLUCIÓN
             if (partialDiference < this.finalDiference) { // SI LA DIFERENCIA DE FUERZA DE TRABAJO PARCIAL ES MENOR, ES MEJOR SOLUCIÓN
-                this.finalDiference = partialDiference;
+                this.finalDiference = partialDiference; // ACTUALIZA VALOR CON LA MENOR DIFRENCIA
                 this.group_1.addEmployees(group_1.getGroup()); // AGREGA EN G1 LA LISTA PARCIAL A LA LISTA FINAL
                 this.group_2.addEmployees(group_2.getGroup()); // AGREGA EN G2 LA LISTA PARCIAL A LA LISTA FINAL
             }
@@ -49,7 +70,8 @@ public class Business {
 
            if (this.isItFeasible(group_1, group_2, groupComplete, partialDiference)) { // PODA
                 this.upCount(); // INCREMENTA EL CONTADOR
-                Employee employeeAux = groupComplete.remove(0); // ELIMINA PRIMER EMPLEADO DE LISTA Y GUARDA UNA COPIA
+
+               Employee employeeAux = groupComplete.remove(0); // ELIMINA PRIMER EMPLEADO DE LISTA Y GUARDA UNA COPIA
                 group_1.addEmployee(employeeAux); // AGREGA EN G1 EL EMPLEADO ELIMINADO DE LA LISTA DE ENTRADA
 
                 this.makeTheBestProductiveGroups(groupComplete, group_1, group_2); // LLAMADO RECURSIVO DE BACKTRACKING
@@ -60,7 +82,6 @@ public class Business {
                 group_2.removeLast(); // ELIMINA ÚLTIMO EMPLEADO DEL GRUPO 2
                 groupComplete.add(0, employeeAux);
             }
-
         }
     }
 
@@ -88,7 +109,6 @@ public class Business {
         }
     }
 
-
     private int getDiference(WorkGroup group_1, WorkGroup group_2) {
         int diference = 0;
         int workForce_1 = group_1.getWorkForce();
@@ -106,8 +126,8 @@ public class Business {
         this.group_1.addEmployees(group.getGroup());
     }
 
-    private ArrayList<Employee> toSelect(ArrayList<Employee> groupEmployees) {
-        return groupEmployees;
+    private Employee toSelect(ArrayList<Employee> groupEmployees) {
+        return groupEmployees.remove(0);
     }
 
     private boolean isSolution(ArrayList<Employee> groupComplete) {

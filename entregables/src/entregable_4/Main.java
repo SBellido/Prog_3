@@ -6,7 +6,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-
+        // EJECUTAR GREEDY Y BACKTRACKING POR SEPARADO
         Business business1 = new Business("Stormtech");
         Business business2 = new Business("BeeReal");
         Business business3 = new Business("Technisis");
@@ -17,6 +17,15 @@ public class Main {
         Business business8 = new Business("Google");
         Business business9 = new Business("Trenda");
 
+        Business business11 = new Business("Stormtech");
+        Business business22 = new Business("BeeReal");
+        Business business33 = new Business("Technisis");
+        Business business44 = new Business("Grupo Asa");
+        Business business55 = new Business("Yahoo");
+        Business business66 = new Business("MediaLab");
+        Business business77 = new Business("Pladema");
+        Business business88 = new Business("Google");
+        Business business99 = new Business("Trenda");
 
         Employee e1 = new Employee(1, "Juan", "Pérez", 32, 48);
         Employee e2 = new Employee(2, "Roberto", "Hernández", 45, 57);
@@ -111,19 +120,28 @@ public class Main {
         entry9.add(e19);
         entry9.add(e20);
 
-        // greedy
-//        business.makeProductiveGroups(entry1);
-//        business.makeProductiveGroups(entry2);
-//        business.makeProductiveGroups(entry3);
-//        business.makeProductiveGroups(entry4);
-//        business.makeProductiveGroups(entry5);
-//        business.makeProductiveGroups(entry6);
-//        business.makeProductiveGroups(entry7);
-//        business.makeProductiveGroups(entry8);
-//        business.makeProductiveGroups(entry9);
+        // GREEDY
+        /*business11.makeProductiveGroups(entry1);
+        business22.makeProductiveGroups(entry2);
+        business33.makeProductiveGroups(entry3);
+        business44.makeProductiveGroups(entry4);
+        business55.makeProductiveGroups(entry5);
+        business66.makeProductiveGroups(entry6);
+        business77.makeProductiveGroups(entry7);
+        business88.makeProductiveGroups(entry8);
+        business99.makeProductiveGroups(entry9);
+        System.out.println("GREEDY");
+        System.out.println(business11.toString()+"\n");
+        System.out.println(business22.toString()+"\n");
+        System.out.println(business33.toString()+"\n");
+        System.out.println(business44.toString()+"\n");
+        System.out.println(business55.toString()+"\n");
+        System.out.println(business66.toString()+"\n");
+        System.out.println(business77.toString()+"\n");
+        System.out.println(business88.toString()+"\n");
+        System.out.println(business99.toString()+"\n");*/
 
-        // backtracking
-        System.out.println("RESULTADOS BACKTRACKING");
+        // BACKTRACKING
         business1.makeTheBestProductiveGroups(entry1);
         business2.makeTheBestProductiveGroups(entry2);
         business3.makeTheBestProductiveGroups(entry3);
@@ -133,15 +151,7 @@ public class Main {
         business7.makeTheBestProductiveGroups(entry7);
         business8.makeTheBestProductiveGroups(entry8);
         business9.makeTheBestProductiveGroups(entry9);
-
-//        business.makeTehBestProductiveGroups(entry3, 0, 0, group_1, group_2);
-//        business.makeTehBestProductiveGroups(entry4, 0, 0, group_1, group_2);
-//        business.makeTehBestProductiveGroups(entry5, 0, 0, group_1, group_2);
-//        business.makeTehBestProductiveGroups(entry6, 0, 0, group_1, group_2);
-//        business.makeTehBestProductiveGroups(entry7, 0, 0, group_1, group_2);
-//        business.makeTehBestProductiveGroups(entry8, 0, 0, group_1, group_2);
-//        business.makeTehBestProductiveGroups(entry9, 0, 0, group_1, group_2);
-
+        System.out.println("BACKTRACKING");
         System.out.println(business1.toString()+"\n");
         System.out.println(business2.toString()+"\n");
         System.out.println(business3.toString()+"\n");
@@ -151,24 +161,6 @@ public class Main {
         System.out.println(business7.toString()+"\n");
         System.out.println(business8.toString()+"\n");
         System.out.println(business9.toString()+"\n");
-
-//        Entrada 1: [ e1, e2, e3, e4, e5, e6 ]
-//
-//        Entrada 2: [ e7, e4, e8, e15]
-//
-//        Entrada 3: [ e19, e12, e11, e13 ]
-//
-//        Entrada 4: [ e19, e18, e14, e16 ]
-//
-//        Entrada 5: [ e7, e8, e20, e3, e16 ]
-//
-//        Entrada 6: [ e7, e8, e20, e3, e16 ]
-//
-//        Entrada 7: [ e17, e2, e19, e20, e4, e12, e15 ]
-//
-//        Entrada 8: [ e12, e14, e18, e6, e2, e9, e10, e16 ]
-//
-//        Entrada 9: [ e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15, e16, e17, e18, e19, e20 ]
 
     }
 
