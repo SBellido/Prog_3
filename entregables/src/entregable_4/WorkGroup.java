@@ -19,7 +19,8 @@ public class WorkGroup {
     }
 
     public void removeLast() {
-        this.group.remove(this.group.size()-1);
+        if (!this.group.isEmpty())
+            this.group.remove(this.group.size()-1);
     }
 
     public ArrayList<Employee> getGroup() {
